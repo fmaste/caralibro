@@ -9,10 +9,11 @@ import org.json.JSONObject;
 
 import caralibro.Rest;
 import caralibro.Utils;
+import caralibro.factory.PageFactory;
 import caralibro.model.Application;
-import caralibro.model.Facebook;
 import caralibro.model.Page;
 import caralibro.model.Session;
+import caralibro.model.constants.Facebook;
 
 
 public class PageDao {
@@ -33,7 +34,7 @@ public class PageDao {
 		for (int i = 0; i < jsonPagesArray.length(); i++) {
 			JSONObject jsonPageObject = jsonPagesArray.getJSONObject(i);
 			String name = jsonPageObject.getString("name");
-			ans.put(name, new Page(jsonPageObject.getLong("page_id"),name));
+			ans.put(name, PageFactory.createPage(jsonPageObject.getLong("page_id"),name));
 		}
 		return ans;
 	}

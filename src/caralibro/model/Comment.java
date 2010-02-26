@@ -1,38 +1,44 @@
 package caralibro.model;
 
 public class Comment {
-	private Long id;
-	private String text;
-	private String externalId;
-	private User user;
-	private Long creationTime; // Unit time!
-	
-	public Comment(Long id, String text, String externalId, User user, Long creationTime) {
-		this.id = id;
-		this.text = text;
-		this.externalId = externalId;
-		this.user = user;
-		this.creationTime = creationTime;
+	private String id = null; // Unique comment id for a given object
+	private String text = null;
+	private User user = null;
+	private Long creationTime = null; // Unit time!
+
+	public Comment() {
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getText() {
 		return text;
 	}
 
-	public String getExternalId() {
-		return externalId;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public User getUser() {
 		return user;
 	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public Long getCreationTime() {
 		return creationTime;
+	}
+
+	public void setCreationTime(Long creationTime) {
+		this.creationTime = creationTime;
 	}
 	
 }

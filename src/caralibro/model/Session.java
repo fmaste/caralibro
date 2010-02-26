@@ -1,32 +1,44 @@
 package caralibro.model;
 
 public class Session {
-	private String key;
-	private String secret;
-	private User user;
-	private Long expirationTime; // In Unix time
+	private String key = null;
+	private String secret= null;
+	private User user = null;
+	private Long expirationTime = null; // In Unix time
 	
-	public Session(String key, String secret, User user, Long expirationTime) {
-		this.key = key;
-		this.secret = secret;
-		this.user = user;
-		this.expirationTime = expirationTime;
+	public Session() {
 	}
-	
+
 	public String getKey() {
 		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	public String getSecret() {
 		return secret;
 	}
 
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
+
 	public User getUser() {
 		return user;
 	}
-	
-	public Long getExpirationTime() {
-		return this.expirationTime;
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
+	public Long getExpirationTime() {
+		return expirationTime;
+	}
+
+	public void setExpirationTime(Long expirationTime) {
+		this.expirationTime = expirationTime;
+	}
+	
 }
