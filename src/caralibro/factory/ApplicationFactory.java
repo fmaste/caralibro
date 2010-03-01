@@ -9,6 +9,7 @@ public class ApplicationFactory {
 		application.setId(id);
 		application.setKey(key);
 		application.setSecret(secret);
+		application.setDesktop(true);
 		return application;
 	}
 	

@@ -4,7 +4,7 @@ public class Application {
 	private Long id = null;
 	private String key = null;
 	private String secret = null;
-	
+
 	public Application() {
 	}
 

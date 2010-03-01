@@ -9,7 +9,6 @@ import java.util.Map;
 import caralibro.model.Application;
 import caralibro.model.Session;
 
-
 public class Utils {
 
 	public static Map<String,String> initParams(Application application, String method) {
@@ -29,8 +28,14 @@ public class Utils {
 	}
 	
 	public static void finalizeParams(Map<String,String> params, Application application) {
-		// This one must be the last one! A generated md5 based on the other params.
+		// This method must be the last one! A generated md5 based on the other params.
 		params.put("sig", generateSig(application.getSecret(),params));
+	}
+
+	public static void finalizeParams(Map<String,String> params, Application application, Session session) {
+		// This method must be the last one! A generated md5 based on the other params.
+		params.put("ss", "true"); // Use session secret to sign the request!!
+		params.put("sig", generateSig(session.getSecret(),params));
 	}
 	
 	public static String generateSig(String applicationSecret, Map<String,String> parameters) {
