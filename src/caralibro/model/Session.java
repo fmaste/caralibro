@@ -2,7 +2,7 @@ package caralibro.model;
 
 public class Session {
 	private String key = null;
-	private String secret= null;
+	private String secret = null;
 	private User user = null;
 	private Long expirationTime = null; // In Unix time
 	

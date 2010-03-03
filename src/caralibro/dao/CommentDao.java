@@ -20,7 +20,7 @@ public class CommentDao {
 	public static Collection<Comment> getPostComments(Application application, Session session, Post post) throws Exception {
 		Map<String,String> params = Utils.initParams(application, session, "Stream.getComments");
 		params.put("post_id", post.getId());
-		Utils.finalizeParams(params, application);
+		Utils.finalizeParams(params, application, session);
 		String commentsJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
 		Collection<Comment> comments = new ArrayList<Comment>();
 		JSONArray commentsJsonArray = new JSONArray(commentsJsonResponse);

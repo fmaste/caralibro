@@ -27,7 +27,7 @@ public class PageDao {
 		Map<String,String> params = Utils.initParams(application, "Pages.getInfo");
 		params.put("session_key", session.getKey());
 		params.put("fields", "page_id,name"); // page_id is always returned (whether included in fields or not, and always as the first subelement)
-		Utils.finalizeParams(params, application);
+		Utils.finalizeParams(params, application, session);
 		String jsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
 		JSONArray jsonPagesArray = new JSONArray(jsonResponse);
 		Map<String,Page> ans = new HashMap<String,Page>();

@@ -22,7 +22,7 @@ public class PostDao {
 	public static Collection<Post> getPostsByPage(Application application, Session session, Page page) throws Exception {
 		Map<String,String> params = Utils.initParams(application, session, "Stream.get");
 		params.put("source_ids", page.getId().toString());
-		Utils.finalizeParams(params, application);
+		Utils.finalizeParams(params, application, session);
 		String streamJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
 		Collection<Post> posts = new ArrayList<Post>();
 		JSONObject streamJsonObject = new JSONObject(streamJsonResponse);
@@ -39,7 +39,7 @@ public class PostDao {
 	public static void removePost(Application application, Session session, Post post) throws Exception {
 		Map<String,String> params = Utils.initParams(application, session, "Stream.remove");
 		params.put("post_id", post.getId());
-		Utils.finalizeParams(params, application);
+		Utils.finalizeParams(params, application, session);
 		Rest.makeRequest(Facebook.REST_SERVER, params);
 	}
 	

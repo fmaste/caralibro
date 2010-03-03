@@ -22,9 +22,5 @@ public class Page {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String toString() {
-		return "Page " + name + " " + id;
-	}
 	
 }
