@@ -6,7 +6,7 @@ import caralibro.model.Post;
 
 public class PostFactory {
 
-	public static Post createPost(String id, String message, Long creationTime, Long updateTime) {
+	public static Post create(String id, String message, Long creationTime, Long updateTime) {
 		Post post = new Post();
 		post.setId(id);
 		post.setText(message);
@@ -15,7 +15,7 @@ public class PostFactory {
 		return post;
 	}
 	
-	public static Post createPost(String streamJsonResponse) throws Exception {
+	public static Post create(String streamJsonResponse) throws Exception {
 		JSONObject postJsonObject = new JSONObject(streamJsonResponse);
 		String id = postJsonObject.getString("post_id");
 		String text = postJsonObject.getString("message");
@@ -28,7 +28,7 @@ public class PostFactory {
 		Long updateTime = postJsonObject.getLong("updated_time");
 		Long creationTime = postJsonObject.getLong("created_time");
 		String permaLink = postJsonObject.getString("permalink");
-		return createPost(id, text, creationTime, updateTime);
+		return create(id, text, creationTime, updateTime);
 	}
 	
 }

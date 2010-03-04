@@ -21,7 +21,7 @@ public class CommentFactory {
 		JSONObject commentJsonObject = new JSONObject(commentJsonResponse);
 		comment.setId(commentJsonObject.getString("id"));
 		comment.setText(commentJsonObject.getString("text"));
-		comment.setUser(UserFactory.createUser(commentJsonObject.getLong("fromid")));
+		comment.setUser(UserFactory.create(commentJsonObject.getLong("fromid")));
 		comment.setCreationTime(commentJsonObject.getLong("time"));
 		return comment;
 	}

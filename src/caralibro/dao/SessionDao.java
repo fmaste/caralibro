@@ -3,7 +3,7 @@ package caralibro.dao;
 import java.util.Map;
 
 import caralibro.Rest;
-import caralibro.Utils;
+import caralibro.factory.RequestFactory;
 import caralibro.factory.SessionFactory;
 import caralibro.model.Application;
 import caralibro.model.Session;
@@ -12,10 +12,10 @@ import caralibro.model.constants.Facebook;
 public class SessionDao {
 
 	public static Session getSessionFromToken(Application application, String authToken) throws Exception {
-		Map<String,String> params = Utils.initParams(application, "Auth.getSession");
+		Map<String,String> params = RequestFactory.create(application, "Auth.getSession");
 		params.put("auth_token", authToken);
 		params.put("generate_session_secret", "1");
-		Utils.finalizeParams(params, application);
+		RequestFactory.sign(params, application);
 		String sessionJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
 		return SessionFactory.createSession(sessionJsonResponse);		
 	}

@@ -24,7 +24,7 @@ public class SessionFactory {
 		if (secret.isEmpty()) {
 			secret = null;
 		}
-		return createSession(key, secret, UserFactory.createUser(userId), expirationTime);
+		return createSession(key, secret, UserFactory.create(userId), expirationTime);
 	}
 	
 }
