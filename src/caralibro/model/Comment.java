@@ -18,7 +18,8 @@ public class Comment {
 	private String id = null;
 	private String text = null;
 	private User user = null;
-	private Long creationTime = null; // Unix time!
+	// Comments can't be updated and only have a creation time.
+	private Long time = null; // Unix time!
 
 	public Comment() {
 	}
@@ -47,12 +48,12 @@ public class Comment {
 		this.user = user;
 	}
 
-	public Long getCreationTime() {
-		return creationTime;
+	public Long getTime() {
+		return time;
 	}
 
-	public void setCreationTime(Long creationTime) {
-		this.creationTime = creationTime;
+	public void setTime(Long time) {
+		this.time = time;
 	}
 	
 }

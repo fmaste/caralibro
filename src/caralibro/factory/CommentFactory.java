@@ -7,23 +7,22 @@ import caralibro.model.User;
 
 public class CommentFactory {
 
-	public static Comment createComment(String id, String text, User user, Long creationTime) {
+	public static Comment create(String id, String text, User user, Long time) {
 		Comment comment = new Comment();
 		comment.setId(id);
 		comment.setText(text);
 		comment.setUser(user);
-		comment.setCreationTime(creationTime);
+		comment.setTime(time);
 		return comment;
 	}
 	
 	public static Comment createComment(String commentJsonResponse) throws Exception {
-		Comment comment = new Comment();
 		JSONObject commentJsonObject = new JSONObject(commentJsonResponse);
-		comment.setId(commentJsonObject.getString("id"));
-		comment.setText(commentJsonObject.getString("text"));
-		comment.setUser(UserFactory.create(commentJsonObject.getLong("fromid")));
-		comment.setCreationTime(commentJsonObject.getLong("time"));
-		return comment;
+		String id = commentJsonObject.getString("id");
+		String text = commentJsonObject.getString("text");
+		User user = UserFactory.create(commentJsonObject.getLong("fromid"));
+		Long time = commentJsonObject.getLong("time");
+		return create(id, text, user, time);
 	}
 	
 }

@@ -16,21 +16,38 @@ import caralibro.model.Post;
 import caralibro.model.Session;
 import caralibro.model.constants.Facebook;
 
+// Before you can get data from a user's stream, you need the extended permission "read_stream".
+// Return a collection of posts or null if there are no posts.
 public class PostDao {
 
-	// Before you can get data from a user's stream, you need the extended permission read_stream.
-	public static Collection<Post> getPostsByPage(Application application, Session session, Page page) throws Exception {
+	private static Collection<Post> getForSourceId(Application application, Session session, String sourceId) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, session, "Stream.get");
-		params.put("source_ids", page.getId().toString());
+		params.put("source_ids", sourceId);
 		RequestFactory.sign(params, application, session);
-		String streamJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
-		Collection<Post> posts = new ArrayList<Post>();
-		JSONObject streamJsonObject = new JSONObject(streamJsonResponse);
-		JSONArray postsJsonArray = streamJsonObject.getJSONArray("posts");
-		for (int i = 0; i < postsJsonArray.length(); i++) {
-			posts.add(PostFactory.create(postsJsonArray.getJSONObject(i).toString()));
+		String streamJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);				
+		// Warning: When there are no posts, 'posts' is an empty object like this
+		// Response: {"posts":{},"profiles":{},"albums":{}}
+		JSONObject streamJsonObject = new JSONObject(streamJsonResponse);		
+		Object postsJsonUnknown = streamJsonObject.opt("posts");
+		if (postsJsonUnknown == null || !(postsJsonUnknown instanceof JSONArray)) {
+			return null;
 		}
-		return posts;
+		Collection<Post> posts = new ArrayList<Post>();
+		JSONArray postsJsonArray = (JSONArray)postsJsonUnknown;
+		for (int i = 0; i < postsJsonArray.length(); i++) {
+			String postString = postsJsonArray.optString(i);
+			if (postString != null && !postString.isEmpty()) {
+				Post post = PostFactory.create(postString);
+				if (post != null) {
+					posts.add(post);
+				}				
+			}
+		}
+		return posts;		
+	}
+	
+	public static Collection<Post> getByPage(Application application, Session session, Page page) throws Exception {
+		return getForSourceId(application, session, page.getId().toString());
 	}
 	
 	// Response Example!
