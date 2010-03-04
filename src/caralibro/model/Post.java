@@ -1,8 +1,11 @@
 package caralibro.model;
 
+// Almost everything in Facebook is a post.
+// Posts can have links, photos, videos, likes and comments!
+// The update time of the post refers to new comments and likes!
 public class Post {
 	// TODO: Can't be a Long ??
-	private String id = null; // It's a string like "sourceId_postID", both numbers
+	private String id = null; // It's a string like "sourceId_postId", being both numbers
 	private String text = null;
 	// TODO: Add user!!
 	private Long updateTime = null;
