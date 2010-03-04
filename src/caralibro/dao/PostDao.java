@@ -24,9 +24,11 @@ import caralibro.model.constants.Facebook;
 // Response: {"posts":[{"post_id":"326834508374_353743318374","viewer_id":1443735325,"source_id":326834508374,"type":56,"app_id":null,"attribution":null,"actor_id":100000751425511,"target_id":326834508374,"message":"Un post!","attachment":{"description":""},"app_data":{},"action_links":null,"comments":{"can_remove":true,"can_post":true,"count":0,"comment_list":{}},"likes":{"href":"http:\/\/www.facebook.com\/social_graph.php?node_id=353743318374&class=LikeManager","count":0,"sample":{},"friends":{},"user_likes":false,"can_like":true},"privacy":{"value":"NOT_EVERYONE"},"updated_time":1267681759,"created_time":1267681759,"tagged_ids":null,"is_hidden":false,"filter_key":"","permalink":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374?v=feed&story_fbid=353743318374"}],"profiles":[{"id":100000751425511,"url":"http:\/\/www.facebook.com\/profile.php?id=100000751425511","name":"Fede Testeando","pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif","type":"user"},{"id":326834508374,"url":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374","name":"testingAFanPage","pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","type":"page"}],"albums":{}}
 public class PostDao {
 
-	private static Collection<Post> getForSourceId(Application application, Session session, String sourceId) throws Exception {
+	private static Collection<Post> getFromSourceId(Application application, Session session, String sourceId) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, session, "Stream.get");
 		params.put("source_ids", sourceId);
+		// params.put("limit", "4294967295"); // 2^32 - 1, limit is a 32 bit int and its default value is 30
+		params.put("limit", "50");
 		RequestFactory.sign(params, application, session);
 		String streamJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);				
 		if (streamJsonResponse == null || streamJsonResponse.isEmpty() || !streamJsonResponse.startsWith("{")) {
@@ -53,12 +55,29 @@ public class PostDao {
 		return posts;
 	}
 	
-	public static Collection<Post> getByPage(Application application, Session session, Page page) throws Exception {
-		return getForSourceId(application, session, page.getId().toString());
+	public static Collection<Post> getFromPage(Application application, Session session, Page page) throws Exception {
+		return getFromSourceId(application, session, page.getId().toString());
 	}
 
-	public static Collection<Post> getByUser(Application application, Session session, User user) throws Exception {
-		return getForSourceId(application, session, user.getId().toString());
+	// TODO:
+//	public static Collection<Post> getFromPageByFans(Application application, Session session, Page page) throws Exception {
+//		Collection<Post> posts = getFromPage(application, session, page);
+//		if (posts == null) {
+//			return null;
+//		}
+//		Collection<Post> postsByFans = new ArrayList<Post>();
+//		for (Post post : posts ) {
+//			if (post.ge)
+//				// TODO: Compare pageId with actor_id !!
+//		}
+//		return 
+//	}
+
+	// TODO: getFromPageByAdmin()
+	// ...
+	
+	public static Collection<Post> getFromUser(Application application, Session session, User user) throws Exception {
+		return getFromSourceId(application, session, user.getId().toString());
 	}
 	
 	public static boolean removePost(Application application, Session session, Post post) throws Exception {
