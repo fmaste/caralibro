@@ -36,8 +36,8 @@ public class Rest {
 	    outputStream.close();
 	    inputStream.close();
 	    httpUrlConnection.disconnect();
-	    System.err.println("Request: " + url + "?" + param);
-		System.err.println("Response: " + responseBody);
+	    //System.err.println("Request: " + url + "?" + param);
+		//System.err.println("Response: " + responseBody);
 		return responseBody;
 	}
 	
