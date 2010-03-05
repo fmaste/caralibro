@@ -18,7 +18,7 @@ import caralibro.model.constants.Facebook;
 // If there are no comments returns null
 public class CommentDao {
 
-	public static Collection<Comment> getByPost(Application application, Session session, Post post) throws Exception {
+	public static Collection<Comment> getFromPost(Application application, Session session, Post post) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, session, "Stream.getComments");
 		params.put("post_id", post.getId());
 		RequestFactory.sign(params, application, session);
@@ -33,7 +33,7 @@ public class CommentDao {
 		for (int i = 0; i < commentsJsonArray.length(); i++) {
 			String commentString = commentsJsonArray.optString(i);
 			if (commentString != null && !commentString.isEmpty()) {
-				Comment comment = CommentFactory.comment(commentString);
+				Comment comment = CommentFactory.create(commentString);
 				if (comment != null ) {
 					comments.add(comment);
 				}

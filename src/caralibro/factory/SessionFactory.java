@@ -6,7 +6,7 @@ import caralibro.model.User;
 
 public class SessionFactory {
 
-	public static Session createSession(String key, String secret, User user, Long expirationTime) {
+	public static Session create(String key, String secret, User user, Long expirationTime) {
 		Session session = new Session();
 		session.setKey(key);
 		session.setSecret(secret);
@@ -15,7 +15,7 @@ public class SessionFactory {
 		return session;
 	}
 	
-	public static Session createSession(String sessionJsonResponse) throws Exception {
+	public static Session create(String sessionJsonResponse) throws Exception {
 		JSONObject sessionJson = new JSONObject(sessionJsonResponse);
 		String key = sessionJson.getString("session_key");
 		Long userId = sessionJson.getLong("uid");
@@ -24,7 +24,7 @@ public class SessionFactory {
 		if (secret.isEmpty()) {
 			secret = null;
 		}
-		return createSession(key, secret, UserFactory.create(userId), expirationTime);
+		return create(key, secret, UserFactory.create(userId), expirationTime);
 	}
 	
 }

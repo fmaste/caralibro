@@ -11,17 +11,17 @@ import caralibro.model.constants.Facebook;
 
 public class SessionDao {
 
-	public static Session getSessionFromToken(Application application, String authToken) throws Exception {
+	public static Session getFromToken(Application application, String authToken) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, "Auth.getSession");
 		params.put("auth_token", authToken);
 		params.put("generate_session_secret", "1");
 		RequestFactory.sign(params, application);
 		String sessionJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
-		return SessionFactory.createSession(sessionJsonResponse);		
+		return SessionFactory.create(sessionJsonResponse);		
 	}
 	
-	public static Session getSessionFromCode(Application application, String code) throws Exception {
-		return getSessionFromToken(application, code);
+	public static Session getFromCode(Application application, String code) throws Exception {
+		return getFromToken(application, code);
 	}
 	
 	// TODO:

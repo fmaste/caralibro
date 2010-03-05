@@ -100,7 +100,7 @@ public class PostDao {
 		return getFromSourceId(application, session, user.getId().toString(), startTime, endTime);
 	}
 	
-	public static boolean removePost(Application application, Session session, Post post) throws Exception {
+	public static boolean remove(Application application, Session session, Post post) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, session, "Stream.remove");
 		params.put("post_id", post.getId());
 		RequestFactory.sign(params, application, session);

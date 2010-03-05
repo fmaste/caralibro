@@ -18,12 +18,12 @@ import caralibro.model.constants.Facebook;
 
 public class PageDao {
 
-	public static Collection<Page> getUserFanPages(Application application, Session session) throws Exception {
-		Map<String,Page> pagesMap = getUserFanPagesByName(application, session);
+	public static Collection<Page> getFromUser(Application application, Session session) throws Exception {
+		Map<String,Page> pagesMap = getFromUserByName(application, session);
 		return pagesMap.values();
 	}
 	
-	public static Map<String,Page> getUserFanPagesByName(Application application, Session session) throws Exception {
+	public static Map<String,Page> getFromUserByName(Application application, Session session) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, "Pages.getInfo");
 		params.put("session_key", session.getKey());
 		params.put("fields", "page_id,name"); // page_id is always returned (whether included in fields or not, and always as the first subelement)
