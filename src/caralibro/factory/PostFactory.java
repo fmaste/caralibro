@@ -12,6 +12,7 @@ public class PostFactory {
 		post.setText(message);
 		post.setCreationTime(creationTime);
 		post.setUpdateTime(updateTime);
+		// TODO: What to do with number of comments, number of likes, links, photo links and video links ??
 		return post;
 	}
 	
@@ -33,6 +34,7 @@ public class PostFactory {
 		Long updateTime = postJsonObject.getLong("updated_time");
 		Long creationTime = postJsonObject.getLong("created_time");
 		String permaLink = postJsonObject.getString("permalink");
+		// TODO: Add number of comments, number of likes, links, photo links and video links ??		
 		// TODO: Take out photos, links, videos, etc!
 		return create(id, text, creationTime, updateTime);
 	}
