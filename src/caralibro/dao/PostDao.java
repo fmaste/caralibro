@@ -9,6 +9,7 @@ import caralibro.Rest;
 import caralibro.factory.PostFactory;
 import caralibro.factory.RequestFactory;
 import caralibro.model.Application;
+import caralibro.model.Group;
 import caralibro.model.Page;
 import caralibro.model.Post;
 import caralibro.model.Session;
@@ -67,6 +68,10 @@ public class PostDao {
 	
 	public static Collection<Post> getFromPage(Application application, Session session, Page page, Long startTime, Long endTime) throws Exception {
 		return getFromSourceId(application, session, page.getId().toString(), startTime, endTime);
+	}
+	
+	public static Collection<Post> getFromGroup(Application application, Session session, Group group, Long startTime, Long endTime) throws Exception {
+		return getFromSourceId(application, session, group.getId().toString(), startTime, endTime);
 	}
 
 	// TODO:

@@ -2,6 +2,7 @@ package caralibro.factory;
 
 import org.json.JSONObject;
 
+import caralibro.integrator.Feed;
 import caralibro.model.Comment;
 import caralibro.model.User;
 
@@ -11,8 +12,9 @@ public class CommentFactory {
 		Comment comment = new Comment();
 		comment.setId(id);
 		comment.setText(text);
-		comment.setUser(user);
-		comment.setTime(time);
+		//comment.setUser(user);
+		//comment.setTime(time);
+		comment.setType(Feed.FB_COMMENT);
 		return comment;
 	}
 	

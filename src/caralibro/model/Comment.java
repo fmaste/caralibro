@@ -1,5 +1,7 @@
 package caralibro.model;
 
+import caralibro.integrator.Feed;
+
 // Comments are attached to posts and can only contain text (No photos, videos, likes, etc).
 // Can't be edited, only deleted if you have the right permissions.
 // An example of some JSON responses made with user's 1443735325 session:
@@ -12,48 +14,17 @@ package caralibro.model;
 // - Remove post 326834508374_349385998374:
 // Request: http://api.facebook.com/restserver.php?v=1.0&api_key=060c9d27db80e7bc1dab1f3ec1e48f63&ss=true&method=Stream.remove&format=json&post_id=326834508374_349385998374&call_id=1267504300894&session_key=d10f11b7ad1fd8dc18857282-1443735325&sig=ad325b68b4eadbd80e5088ee43664c38
 // Response: true
-public class Comment {
+
+public class Comment extends Feed {
 	// TODO: Find why it is not a Long instead of String!
 	// It is composed of sourceId_postId_commentId
-	private String id = null;
-	private String text = null;
-	private User user = null;
+	// private String id = null;
+	// private String text = null;
+	// private User user = null;
 	// Comments can't be updated and only have a creation time.
-	private Long time = null; // Unix time!
+	// private Long time = null; // Unix time!
 
 	public Comment() {
-	}
-	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Long getTime() {
-		return time;
-	}
-
-	public void setTime(Long time) {
-		this.time = time;
 	}
 	
 }
