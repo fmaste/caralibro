@@ -1,0 +1,49 @@
+* crear clase Feed:																									OK
+	- Las clases Post y Comment ahora extienden de Feed																OK
+	- Agregar el tipo en PostFactory y CommentFactory																OK
+	- La interface FBContentManager ahora manipula Feeds															OK
+	
+* Crear la clase InitData que se pasa al constructor de Integrator junto con el tipo de app							OK
+	- Implementar una clase que extienda de FBInitData y contenga la info necesaria para iniciar una FB App			OK
+
+* En post factory parsear 																							OK
+	- videos 																										OK
+	- fotos																											OK
+	- links																											OK
+
+* Copiar todo lo de Fan Pages para Groups (en FBMain cuando instanciamos FBInitData Cambiar los nombres y tipos)	OK
+
+* FBContentManaget.getFeeds solo trae los posts de determinada Fan Page.
+	- Pensar la mejor forma de ahcerle llegar la lista de Fan Pages/Groups que debe recorrer teniendo en
+	cuenta que todas deben compartir el mismo SessionKey y SessionSecret
+
+* FBContentManager.remove solo elimina posts. Falta hacer que elimine comentarios									OK
+
+* Ellos necesitan una interfaz que les permita traer todo lo nuevo a partir de una fecha (parámetro de ellos) 
+	- Interfaz ContentManager con una implementacion FacebookContentManagerque le pidas todo lo nuevo.				OK
+
+* Tienen que poder diferenciar el tipo de contenido, post o comment!												OK
+	- Le ponemos un getType al Objeto Feed.																			OK
+
+* Necesitan un permalink al contenido para pasarle al cliente
+	- Hay que agregarle al objeto Feed un Permalink que a veces viene con la
+	respuesta de Facebook y si no hay que generarlo en base al Id (la
+	ultima me parece la mejor por que creo que no son muy confiables los
+	que devuelve Facebook)
+
+
+* Necesitan el usuario que creo el contenido! (solo el id)
+	- Hay que agregarle al objeto Feed el UserId. 																	OK
+	- Para hacerles esto mas completo le agregamos un UserDao por si quieren mas datos del user
+		pero que no los busque siempre sino son muchas consultas.
+
+
+* Necesitanb la fecha de creacion del contenido!
+	- Agregarle al objeto feed un creationTime y updateTime															OK
+
+
+* De las relaciones entre contenidos solo necesitan el id del post para el comment!
+	- Esto lo sacamos del post y si no se puede es la primer parte del id
+	del comment, lo parseamos y ya.
+	Esto nos caga es nuestro objeto Feed que estaria bueno que sea
+	generico y no se como engancharlo de forma prolija.
