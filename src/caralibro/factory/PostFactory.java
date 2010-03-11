@@ -1,28 +1,22 @@
 package caralibro.factory;
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.Collection;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import caralibro.integrator.Feed;
-import caralibro.model.Post;
+import caralibro.model.data.Post;
 
 public class PostFactory {
 
-	public static Post create(String id, String message, Long creationTime, Long updateTime, ArrayList<String> photoUrls,
-			ArrayList<String> videoUrls, ArrayList<String> linkUrls) {
+	// TODO: And the user??
+	public static Post create(String id, String message, ArrayList<String> photoUrls, ArrayList<String> videoUrls, ArrayList<String> linkUrls, Integer comments, Integer likes, Long creationTime, Long updateTime) {
 		Post post = new Post();
 		post.setId(id);
 		post.setText(message);
 		post.setCreationTime(creationTime);
 		post.setUpdateTime(updateTime);
-		post.setType(Feed.FB_POST);
 		// TODO: What to do with number of comments, number of likes, links, photo links and video links ??
-		
 		if (photoUrls != null && !photoUrls.isEmpty()) {
 			post.setPhotoUrls(photoUrls);
 		}
@@ -32,6 +26,8 @@ public class PostFactory {
 		if (linkUrls != null && !linkUrls.isEmpty()) {
 			post.setLinkUrls(linkUrls);
 		}
+		post.setComments(comments);
+		post.setLikes(likes);
 		return post;
 	}
 	
@@ -50,26 +46,19 @@ public class PostFactory {
 		// FIXME: Gives error sometimes, but the string is there!
 		// Maybe the key is sometimes a string sometimes a long like with page id and post id
 		// Long targetId = postJsonObject.getLong("target_id");
+		// TODO: The permalink must be created later based on the post id!
+		// String permaLink = postJsonObject.getString("permalink");
+		ArrayList<String> photoUrls = getPhotoUrls(postJsonObject);
+		ArrayList<String> videoUrls = getVideoUrls(postJsonObject);
+		ArrayList<String> linkUrls = getLinkUrls(postJsonObject);
+		// TODO: Add number of comments and number of likes
 		Long updateTime = postJsonObject.getLong("updated_time");
 		Long creationTime = postJsonObject.getLong("created_time");
-		String permaLink = postJsonObject.getString("permalink");
-		// TODO: Add number of comments, number of likes, links, photo links and video links ??		
-		// TODO: Take out photos, links, videos, etc!
-		
-		// Get photo urls
-		ArrayList<String> photoUrls = getPhotoUrls(postJsonObject);
-		// Get video urls
-		ArrayList<String> videoUrls = getVideoUrls(postJsonObject);
-		// Get links urls
-		ArrayList<String> linkUrls = getLinkUrls(postJsonObject);
-		
-		return create(id, text, creationTime, updateTime, photoUrls, videoUrls, linkUrls);
+		return create(id, text, photoUrls, videoUrls, linkUrls, null, null, creationTime, updateTime);
 	}
 
-	private static ArrayList<String> getPhotoUrls(JSONObject postJsonObject) {
-		
-		ArrayList<String> photoUrls = new ArrayList<String>();
-		
+	private static ArrayList<String> getPhotoUrls(JSONObject postJsonObject) {		
+		ArrayList<String> photoUrls = new ArrayList<String>();		
 		try {
 			JSONArray array = postJsonObject.getJSONObject("attachment").getJSONArray("media");
 			int index;
@@ -87,9 +76,7 @@ public class PostFactory {
 	}
 	
 	private static ArrayList<String> getVideoUrls(JSONObject postJsonObject) {
-
-		ArrayList<String> videoUrls = new ArrayList<String>();
-		
+		ArrayList<String> videoUrls = new ArrayList<String>();		
 		try {
 			JSONArray array = postJsonObject.getJSONObject("attachment").getJSONArray("media");
 			int index;
@@ -106,10 +93,8 @@ public class PostFactory {
 		return videoUrls;
 	}
 	
-	private static ArrayList<String> getLinkUrls(JSONObject postJsonObject) {
-		
-		ArrayList<String> linkUrls = new ArrayList<String>();
-		
+	private static ArrayList<String> getLinkUrls(JSONObject postJsonObject) {		
+		ArrayList<String> linkUrls = new ArrayList<String>();		
 		try {
 			String url = postJsonObject.getJSONObject("attachment").getString("name");
 			linkUrls.add(url);
@@ -119,4 +104,5 @@ public class PostFactory {
 		}
 		return linkUrls;
 	}
+	
 }

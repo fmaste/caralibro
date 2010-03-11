@@ -2,107 +2,84 @@ package caralibro.integrator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
-
 import caralibro.dao.CommentDao;
-import caralibro.dao.GroupDao;
-import caralibro.dao.LoginDao;
-import caralibro.dao.PageDao;
 import caralibro.dao.PostDao;
-import caralibro.dao.SessionDao;
-import caralibro.factory.ApplicationFactory;
-import caralibro.factory.SessionFactory;
-import caralibro.factory.UserFactory;
-import caralibro.model.Application;
-import caralibro.model.Comment;
-import caralibro.model.Group;
-import caralibro.model.Page;
-import caralibro.model.Post;
-import caralibro.model.Session;
-import caralibro.model.User;
+import caralibro.integrator.feed.CommentFeed;
+import caralibro.integrator.feed.Feed;
+import caralibro.integrator.feed.PostFeed;
+import caralibro.integrator.feed.TypedFeed;
+import caralibro.model.data.Application;
+import caralibro.model.data.Comment;
+import caralibro.model.data.Group;
+import caralibro.model.data.Page;
+import caralibro.model.data.Post;
+import caralibro.model.data.Session;
+import caralibro.model.data.User;
 
-public class FBContentManager implements IContentManager {
-	
+public class FBContentManager implements ContentManager {	
+	private static enum FeedType {POST, COMMENT};
 	private Application application;
 	private Session session;
-	private User user;
-	private Page page = null;
-	private Group group = null;
+	private String sourceId;
+	private Long nextUpdateStartTime = null;
+	
+	public FBContentManager(Application application, Session session, User user) {
+		this(application, session, user.getId().toString());
+	}
 
-	public FBContentManager(FBInitData initData) throws Exception {
-		
-		this.application = ApplicationFactory.create(initData.getId(), initData.getKey(), initData.getSecrect(), initData.isDesktop());
-		this.session = SessionFactory.create(initData.getSessionKey(), initData.getSessionSecret(), UserFactory.create(initData.getUserId()),
-				initData.getExpirationTime());
-		this.user = UserFactory.create(initData.getUserId());
-		
-		switch(initData.getSourceType()) {
-			case FBInitData.FAN_PAGE: 
-				Map<String,Page> fanPages = PageDao.getFromUserByName(application, session);
-		 		this.page = fanPages.get(initData.getSourceName());
-				break;
-			case FBInitData.GROUP:
-				Map<String,Group> groups = GroupDao.getFromUserByName(application, session);
-		 		this.group = groups.get(initData.getSourceName()); ;
-				break;
-			default: throw new Exception("Invalid source type");
-		}
+	public FBContentManager(Application application, Session session, Page page) {
+		this(application, session, page.getId().toString());
+	}
+	
+	public FBContentManager(Application application, Session session, Group group) {
+		this(application, session, group.getId().toString());
+	}
+
+	private FBContentManager(Application application, Session session, String sourceId) {
+		this.application = application;
+		this.session = session;
+		this.sourceId = sourceId;
+	}
+	
+	@Override
+	public void setNextUpdateStartTime(Long startTime) {
+		this.nextUpdateStartTime = startTime;
 	}
 
 	@Override
 	public Collection<Feed> getFeeds() throws Exception {
-		
-		// TODO: Brings posts from a determined fan page only
-		Collection<Post> posts;
-		
-		if (page != null) {
-			posts = PostDao.getFromPage(application, session, page, null, null);
-		} else if (group != null) {
-			posts = PostDao.getFromGroup(application, session, group, null, null);
-		} else {
-			return null;
-		}
-		
-		Collection<Feed> answer = new ArrayList<Feed>();
-		
+		Long startTime = nextUpdateStartTime;
+		nextUpdateStartTime = System.currentTimeMillis();
+		Collection<Post> posts = PostDao.getFromSourceId(application, session, sourceId, startTime, null);	
+		Collection<Feed> feeds = new ArrayList<Feed>();		
 		if (posts != null) {
 			for (Post post : posts) {
-				System.out.println("Post text: " + post.getText());
-				answer.add(post);
-				
+				feeds.add(new TypedFeed(new  PostFeed(post), FeedType.POST.hashCode()));				
+				// Calls to Stream.getComments do not affect the limit of 100 request per 600 seconds!
 				Collection<Comment> comments = CommentDao.getFromPost(application, session, post);
 				if (comments != null) {
 					for (Comment comment : comments) {
-						System.out.println("Comment: " + comment.getText());
-						answer.add(comment);
+						feeds.add(new TypedFeed(new CommentFeed(comment), FeedType.COMMENT.hashCode()));
 					}				
 				}
 			}
 		}
-		
-		return answer;
-	}
-
-	@Override
-	public Collection<Feed> getFeedsFromTime(Long time) {
-		// TODO Auto-generated method stub
-		return null;
+		return feeds;
 	}
 	
 	@Override
 	public boolean remove(Feed feed) throws Exception {
-		if (feed instanceof Post) {
-			Post post = (Post) feed;
-			if (post.getVideoUrls() != null) {
-				System.out.println("*Removing* post with video, video url: " + post.getVideoUrls().get(0));
-				return false;
+		if (feed instanceof TypedFeed) {
+			TypedFeed typedFeed = (TypedFeed)feed;
+			if (typedFeed.getType() == FeedType.POST.hashCode()) {
+				Post post = ((PostFeed)typedFeed.getFeed()).getPost();
+				return PostDao.remove(application, session, post);
+			} else if (typedFeed.getType() == FeedType.COMMENT.hashCode()) {
+				Comment comment = ((CommentFeed)typedFeed.getFeed()).getComment();
+				return CommentDao.remove(application, session, comment);
 			}
-			return PostDao.remove(application, session, post);
-		} else if (feed instanceof Comment) {
-			Comment comment = (Comment) feed;
-			return CommentDao.remove(application, session, comment);
-		} else {
-			return false;
 		}
+		throw new Exception("Invalid feed! Was not created with this conten manager");
 	}
+	
 }

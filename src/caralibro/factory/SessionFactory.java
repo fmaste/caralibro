@@ -1,8 +1,9 @@
 package caralibro.factory;
 
 import org.json.JSONObject;
-import caralibro.model.Session;
-import caralibro.model.User;
+
+import caralibro.model.data.Session;
+import caralibro.model.data.User;
 
 public class SessionFactory {
 

@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import caralibro.model.Application;
-import caralibro.model.Session;
+import caralibro.model.data.Application;
+import caralibro.model.data.Session;
 
 public class RequestFactory {
 	

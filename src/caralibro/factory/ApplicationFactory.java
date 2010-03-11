@@ -1,6 +1,6 @@
 package caralibro.factory;
 
-import caralibro.model.Application;
+import caralibro.model.data.Application;
 
 public class ApplicationFactory {
 

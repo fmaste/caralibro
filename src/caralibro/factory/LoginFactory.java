@@ -1,6 +1,6 @@
 package caralibro.factory;
 
-import caralibro.model.Application;
+import caralibro.model.data.Application;
 
 // Used to login your application (get a valid session). You can pass some extended permissions to the login url.
 public class LoginFactory {

@@ -2,13 +2,15 @@ package caralibro.integrator;
 
 import java.util.Collection;
 
+import caralibro.integrator.feed.Feed;
+
 public class Integrator {
 
 	public static final int FB_APP = 0;
 	public static final int OS_APP = 1;
 	// etc..
 	
-	private IContentManager contentManager;
+	private ContentManager contentManager;
 	private IKeepconManager keepconManager;
 	private int type; 
 	private InitData initData;

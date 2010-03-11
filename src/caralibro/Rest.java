@@ -21,6 +21,7 @@ public class Rest {
 		httpUrlConnection.setDoInput(true);
 	    httpUrlConnection.setDoOutput(true);
 	    httpUrlConnection.connect();
+	    System.err.println("Request: " + url + "?" + param);
 	    OutputStream outputStream = httpUrlConnection.getOutputStream();
 	    outputStream.write(param.getBytes("UTF-8"));
 	    InputStream inputStream = httpUrlConnection.getInputStream();
@@ -36,9 +37,8 @@ public class Rest {
 	    outputStream.close();
 	    inputStream.close();
 	    httpUrlConnection.disconnect();
-	    //System.err.println("Request: " + url + "?" + param);
-		//System.err.println("Response: " + responseBody);
-		return responseBody;
+		System.err.println("Response: " + responseBody);
+	    return responseBody;
 	}
 	
 	private static String getParamAsString(Map<String,String> params) {

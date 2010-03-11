@@ -1,5 +1,5 @@
-package caralibro.model;
-/* probando commit con git */
+package caralibro.model.data;
+
 public class User {
 	// The user ID is a 64-bit int datatype. 
 	// If you're storing it in a MySQL database, use the BIGINT unsigned datatype. 
@@ -17,4 +17,5 @@ public class User {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 }

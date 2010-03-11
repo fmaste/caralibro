@@ -14,11 +14,11 @@ import caralibro.factory.ApplicationFactory;
 import caralibro.factory.AuthorizationFactory;
 import caralibro.factory.LoginFactory;
 import caralibro.factory.SessionFactory;
-import caralibro.model.Application;
-import caralibro.model.Comment;
-import caralibro.model.Page;
-import caralibro.model.Post;
-import caralibro.model.Session;
+import caralibro.model.data.Application;
+import caralibro.model.data.Comment;
+import caralibro.model.data.Page;
+import caralibro.model.data.Post;
+import caralibro.model.data.Session;
 
 // Setting Up Your Application:
 

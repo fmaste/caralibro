@@ -9,13 +9,13 @@ import org.json.JSONArray;
 import caralibro.Rest;
 import caralibro.factory.CommentFactory;
 import caralibro.factory.RequestFactory;
-import caralibro.model.Application;
-import caralibro.model.Comment;
-import caralibro.model.Post;
-import caralibro.model.Session;
 import caralibro.model.constants.Facebook;
+import caralibro.model.data.Application;
+import caralibro.model.data.Comment;
+import caralibro.model.data.Post;
+import caralibro.model.data.Session;
 
-// If there are no comments returns null
+// If there are no comments returns null or empty
 public class CommentDao {
 
 	// Comment request response example
@@ -34,7 +34,7 @@ public class CommentDao {
 		Collection<Comment> comments = new ArrayList<Comment>();
 		JSONArray commentsJsonArray = new JSONArray(commentsJsonResponse);
 		for (int i = 0; i < commentsJsonArray.length(); i++) {
-			// The comment index is retrieved as a String and CommentFactory must now how to handle it!
+			// The comment index is retrieved as a String and CommentFactory must know how to handle it!
 			String commentString = commentsJsonArray.optString(i);
 			if (commentString != null && !commentString.isEmpty()) {
 				Comment comment = CommentFactory.create(commentString);

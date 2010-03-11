@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import caralibro.integrator.FBInitData;
-import caralibro.integrator.Feed;
 import caralibro.integrator.Integrator;
+import caralibro.integrator.feed.Feed;
 
 
 public class FBMain {

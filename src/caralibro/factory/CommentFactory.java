@@ -2,19 +2,18 @@ package caralibro.factory;
 
 import org.json.JSONObject;
 
-import caralibro.integrator.Feed;
-import caralibro.model.Comment;
-import caralibro.model.User;
+import caralibro.model.data.Comment;
+import caralibro.model.data.User;
 
 public class CommentFactory {
 
-	public static Comment create(String id, String text, User user, Long time) {
+	// TODO: And the user??
+	public static Comment create(String id, String text, User user, Long creationTime) {
 		Comment comment = new Comment();
 		comment.setId(id);
 		comment.setText(text);
-		//comment.setUser(user);
-		//comment.setTime(time);
-		comment.setType(Feed.FB_COMMENT);
+		comment.setUser(user);
+		comment.setCreationTime(creationTime);;
 		return comment;
 	}
 	

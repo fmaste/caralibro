@@ -1,6 +1,6 @@
 package caralibro.factory;
 
-import caralibro.model.User;
+import caralibro.model.data.User;
 
 public class UserFactory {
 

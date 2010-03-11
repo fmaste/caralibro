@@ -1,4 +1,4 @@
-package caralibro.model;
+package caralibro.model.data;
 
 public class Page {
 	private Long id = null;

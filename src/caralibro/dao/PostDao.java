@@ -8,25 +8,25 @@ import org.json.JSONObject;
 import caralibro.Rest;
 import caralibro.factory.PostFactory;
 import caralibro.factory.RequestFactory;
-import caralibro.model.Application;
-import caralibro.model.Group;
-import caralibro.model.Page;
-import caralibro.model.Post;
-import caralibro.model.Session;
-import caralibro.model.User;
 import caralibro.model.constants.Facebook;
+import caralibro.model.data.Application;
+import caralibro.model.data.Group;
+import caralibro.model.data.Page;
+import caralibro.model.data.Post;
+import caralibro.model.data.Session;
+import caralibro.model.data.User;
 
 // Before you can get data from a user's stream, you need the extended permission "read_stream".
 // A Stream.get example (only one posts, no comments)
 // Request: http://api.facebook.com/restserver.php?v=1.0&api_key=060c9d27db80e7bc1dab1f3ec1e48f63&ss=true&method=Stream.get&format=json&source_ids=326834508374&call_id=1267682545637&session_key=e9088abfc1b185b9e11b0bee-1443735325&sig=b6af78537a2da6d4b640c752824ac0b2
 // Response: {"posts":[{"post_id":"326834508374_353743318374","viewer_id":1443735325,"source_id":326834508374,"type":56,"app_id":null,"attribution":null,"actor_id":100000751425511,"target_id":326834508374,"message":"Un post!","attachment":{"description":""},"app_data":{},"action_links":null,"comments":{"can_remove":true,"can_post":true,"count":0,"comment_list":{}},"likes":{"href":"http:\/\/www.facebook.com\/social_graph.php?node_id=353743318374&class=LikeManager","count":0,"sample":{},"friends":{},"user_likes":false,"can_like":true},"privacy":{"value":"NOT_EVERYONE"},"updated_time":1267681759,"created_time":1267681759,"tagged_ids":null,"is_hidden":false,"filter_key":"","permalink":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374?v=feed&story_fbid=353743318374"}],"profiles":[{"id":100000751425511,"url":"http:\/\/www.facebook.com\/profile.php?id=100000751425511","name":"Fede Testeando","pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif","type":"user"},{"id":326834508374,"url":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374","name":"testingAFanPage","pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","type":"page"}],"albums":{}}
 public class PostDao {
-	// By trial an error this was my calculated max number of posts that can be retrieved. More and you get an HTTP 500 error.
+	// By trial an error this was my calculated max number of posts that can be retrieved. More and you get an HTTP 500 error or an empty array.
 	private static final String MAX_LIMIT = "300";
 	
 	// Return a collection of posts or null if there are no posts.
 	// Use time only if it is not null.
-	private static Collection<Post> getFromSourceId(Application application, Session session, String sourceId, Long startTime, Long endTime) throws Exception {
+	public static Collection<Post> getFromSourceId(Application application, Session session, String sourceId, Long startTime, Long endTime) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, session, "Stream.get");
 		params.put("source_ids", sourceId);
 		params.put("limit", MAX_LIMIT); // Facebook default limit is 30
@@ -73,34 +73,6 @@ public class PostDao {
 	public static Collection<Post> getFromGroup(Application application, Session session, Group group, Long startTime, Long endTime) throws Exception {
 		return getFromSourceId(application, session, group.getId().toString(), startTime, endTime);
 	}
-
-	// TODO:
-//	public static Collection<Post> getFromPageByFans(Application application, Session session, Page page, Long startTime, Long endTime) throws Exception {
-//		Collection<Post> posts = getFromPage(application, session, page, startTime, endTime);
-//		if (posts == null) {
-//			return null;
-//		}
-//		Collection<Post> postsByFans = new ArrayList<Post>();
-//		for (Post post : posts) {
-//			if (post.ge)
-//				// TODO: Compare pageId with actor_id !!
-//		}
-//		return postsByFans;
-//	}
-
-	// TODO:
-//	public static Collection<Post> getFromPageByAdmin(Application application, Session session, Page page, Long startTime, Long endTime) throws Exception {
-//		Collection<Post> posts = getFromPage(application, session, page, startTime, endTime);
-//		if (posts == null) {
-//			return null;
-//		}
-//		Collection<Post> postsByFans = new ArrayList<Post>();
-//		for (Post post : posts) {
-//			if (post.ge)
-//				// TODO: Compare pageId with actor_id !!
-//		}
-//		return postsByFans;
-//	}
 	
 	public static Collection<Post> getFromUser(Application application, Session session, User user, Long startTime, Long endTime) throws Exception {
 		return getFromSourceId(application, session, user.getId().toString(), startTime, endTime);

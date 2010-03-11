@@ -3,18 +3,14 @@ package caralibro.dao;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
-
 import caralibro.Rest;
 import caralibro.factory.PageFactory;
 import caralibro.factory.RequestFactory;
-import caralibro.model.Application;
-import caralibro.model.Page;
-import caralibro.model.Session;
 import caralibro.model.constants.Facebook;
-
+import caralibro.model.data.Application;
+import caralibro.model.data.Page;
+import caralibro.model.data.Session;
 
 public class PageDao {
 
@@ -24,19 +20,28 @@ public class PageDao {
 	}
 	
 	public static Map<String,Page> getFromUserByName(Application application, Session session) throws Exception {
-		Map<String,String> params = RequestFactory.create(application, "Pages.getInfo");
-		params.put("session_key", session.getKey());
+		Map<String,String> params = RequestFactory.create(application, session, "Pages.getInfo");
 		params.put("fields", "page_id,name"); // page_id is always returned (whether included in fields or not, and always as the first subelement)
 		RequestFactory.sign(params, application, session);
-		String jsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
-		JSONArray jsonPagesArray = new JSONArray(jsonResponse);
-		Map<String,Page> ans = new HashMap<String,Page>();
-		for (int i = 0; i < jsonPagesArray.length(); i++) {
-			JSONObject jsonPageObject = jsonPagesArray.getJSONObject(i);
-			String name = jsonPageObject.getString("name");
-			ans.put(name, PageFactory.create(jsonPageObject.getLong("page_id"),name));
+		String pagesJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
+		// Warning: If there are no pages the response is like this
+		// Response: {}
+		if (pagesJsonResponse == null || pagesJsonResponse.isEmpty() || !pagesJsonResponse.startsWith("[")) {
+			return null;
 		}
-		return ans;
+		Map<String,Page> pages = new HashMap<String,Page>();
+		JSONArray pagesJsonArray = new JSONArray(pagesJsonResponse);
+		for (int i = 0; i < pagesJsonArray.length(); i++) {
+			// The page index is retrieved as a String and PageFactory must know how to handle it!
+			String pageString = pagesJsonArray.optString(i);
+			if (pageString != null && !pageString.isEmpty()) {
+				Page page = PageFactory.create(pageString);
+				if (page != null) {
+					pages.put(page.getName(), page);
+				}
+			}
+		}
+		return pages;
 	}
 	
 }

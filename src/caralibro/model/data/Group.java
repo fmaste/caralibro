@@ -1,4 +1,4 @@
-package caralibro.model;
+package caralibro.model.data;
 
 public class Group {
 	private Long id = null;
