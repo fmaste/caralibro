@@ -3,9 +3,7 @@ package caralibro.dao;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-
 import org.json.JSONArray;
-
 import caralibro.Rest;
 import caralibro.factory.CommentFactory;
 import caralibro.factory.RequestFactory;
@@ -44,6 +42,12 @@ public class CommentDao {
 			}			
 		}
 		return comments;
+	}
+	
+	// TODO:
+	public static Collection<Comment> get(Application application, Session session, Long startTime, Long endTime) {
+		// SELECT id, fromid, text, time FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE source_id = 55432788477 AND actor_id = 55432788477 LIMIT 2000) AND time > 1268369670
+		return null;
 	}
 	
 	public static boolean remove(Application application, Session session, Comment comment) throws Exception {

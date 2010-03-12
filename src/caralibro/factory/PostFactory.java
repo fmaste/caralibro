@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import caralibro.model.data.Post;
 
 public class PostFactory {
@@ -16,7 +15,6 @@ public class PostFactory {
 		post.setText(message);
 		post.setCreationTime(creationTime);
 		post.setUpdateTime(updateTime);
-		// TODO: What to do with number of comments, number of likes, links, photo links and video links ??
 		if (photoUrls != null && !photoUrls.isEmpty()) {
 			post.setPhotoUrls(photoUrls);
 		}
@@ -52,9 +50,19 @@ public class PostFactory {
 		ArrayList<String> videoUrls = getVideoUrls(postJsonObject);
 		ArrayList<String> linkUrls = getLinkUrls(postJsonObject);
 		// TODO: Add number of comments and number of likes
+		JSONObject commentsJsonObject = postJsonObject.optJSONObject("comments");
+		Integer comments = 0;
+		if (commentsJsonObject != null) {
+			comments = commentsJsonObject.optInt("count");	
+		}
+		JSONObject likesJsonObject = postJsonObject.optJSONObject("likes");
+		Integer likes = 0;
+		if (likesJsonObject != null) {
+			likes = likesJsonObject.optInt("count");	
+		}				
 		Long updateTime = postJsonObject.getLong("updated_time");
 		Long creationTime = postJsonObject.getLong("created_time");
-		return create(id, text, photoUrls, videoUrls, linkUrls, null, null, creationTime, updateTime);
+		return create(id, text, photoUrls, videoUrls, linkUrls, comments, likes, creationTime, updateTime);
 	}
 
 	private static ArrayList<String> getPhotoUrls(JSONObject postJsonObject) {		

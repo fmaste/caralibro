@@ -2,6 +2,8 @@ package caralibro.integrator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import caralibro.dao.CommentDao;
 import caralibro.dao.PostDao;
 import caralibro.integrator.feed.CommentFeed;
@@ -22,6 +24,7 @@ public class FBContentManager implements ContentManager {
 	private Session session;
 	private String sourceId;
 	private Long nextUpdateStartTime = null;
+	private Map<String,Integer> postIdCommentCount;
 	
 	public FBContentManager(Application application, Session session, User user) {
 		this(application, session, user.getId().toString());
@@ -39,6 +42,7 @@ public class FBContentManager implements ContentManager {
 		this.application = application;
 		this.session = session;
 		this.sourceId = sourceId;
+		this.postIdCommentCount = new HashMap<String,Integer>();
 	}
 	
 	@Override
@@ -49,19 +53,33 @@ public class FBContentManager implements ContentManager {
 	@Override
 	public Collection<Feed> getFeeds() throws Exception {
 		Long startTime = nextUpdateStartTime;
-		nextUpdateStartTime = System.currentTimeMillis();
-		Collection<Post> posts = PostDao.getFromSourceId(application, session, sourceId, startTime, null);	
-		Collection<Feed> feeds = new ArrayList<Feed>();		
+		if (startTime == null) {
+			// Start time defaults to the past 24 hours
+			startTime = System.currentTimeMillis()/1000 - 14L*60L*60L;
+		}
+		nextUpdateStartTime = System.currentTimeMillis()/1000;
+		Collection<Post> posts = PostDao.getFromSourceId(application, session, sourceId, startTime, System.currentTimeMillis()/1000 - 12L*60L*60L);	
+		Collection<Feed> feeds = new ArrayList<Feed>();
 		if (posts != null) {
 			for (Post post : posts) {
-				feeds.add(new TypedFeed(new  PostFeed(post), FeedType.POST.hashCode()));				
-				// Calls to Stream.getComments do not affect the limit of 100 request per 600 seconds!
-				Collection<Comment> comments = CommentDao.getFromPost(application, session, post);
-				if (comments != null) {
-					for (Comment comment : comments) {
-						feeds.add(new TypedFeed(new CommentFeed(comment), FeedType.COMMENT.hashCode()));
-					}				
+				if (post.getCreationTime() != null && post.getCreationTime() > startTime) {
+					feeds.add(new TypedFeed(new  PostFeed(post), FeedType.POST.hashCode()));
 				}
+				if (post.getComments() == null || post.getComments() > 0) {
+					Integer postComments = postIdCommentCount.get(post.getId());
+					if (postComments == null || (post.getComments() != null && postComments < post.getComments())) {
+						// Calls to Stream.getComments do not affect the limit of 100 request per 600 seconds!
+						Collection<Comment> comments = CommentDao.getFromPost(application, session, post);				
+						if (comments != null) {
+							for (Comment comment : comments) {
+								if (comment.getCreationTime() != null && comment.getCreationTime() > startTime) {
+									feeds.add(new TypedFeed(new CommentFeed(comment), FeedType.COMMENT.hashCode()));
+								}
+							}
+						}
+					}
+				}
+				postIdCommentCount.put(post.getId(), post.getComments());
 			}
 		}
 		return feeds;
