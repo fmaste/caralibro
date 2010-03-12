@@ -8,12 +8,13 @@ import caralibro.model.data.User;
 public class CommentFactory {
 
 	// TODO: And the user??
-	public static Comment create(String id, String text, User user, Long creationTime) {
+	public static Comment create(String id, String text, User user, Long creationTime, String postPermaLink) {
 		Comment comment = new Comment();
 		comment.setId(id);
 		comment.setText(text);
 		comment.setUser(user);
-		comment.setCreationTime(creationTime);;
+		comment.setCreationTime(creationTime);
+		comment.setPostPermaLink(postPermaLink);
 		return comment;
 	}
 	
@@ -30,7 +31,12 @@ public class CommentFactory {
 		String text = commentJsonObject.getString("text");
 		User user = UserFactory.create(commentJsonObject.getLong("fromid"));
 		Long time = commentJsonObject.getLong("time");
-		return create(id, text, user, time);
+		String postId = id.split("_")[1];
+		return create(id, text, user, time, createUrl(postId));
+	}
+	
+	private static String createUrl (String postId) {
+		return "http://www.facebook.com/mauriciomacri?v=feed&story_fbid=" + postId;
 	}
 	
 }

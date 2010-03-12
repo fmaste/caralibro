@@ -1,7 +1,7 @@
-* Necesitan un permalink al contenido para pasarle al cliente
-	INVESTIGAR COMO GENERARLOS A PARTIR DE SUS IDs, si se puede!!!!!!!!!!!!!!!!!
-	CREAR EN PostFactory y CommentFactory metodos createUrl!!!!!!!!!!!!!!!!!!!!!
-	Y AGREGARLOS A LA INTERFAZ Feed y A TODOS SUS DECORATORS!!
+* Necesitan un permalink al contenido para pasarle al cliente															
+	- El permalink del comment queda igual al permalink del post al que pertenece.
+	- CREAR EN PostFactory y CommentFactory metodos createUrl!!!!!!!!!!!!!!!!!!!!!									OK
+	- Y AGREGARLOS A LA INTERFAZ Feed y A TODOS SUS DECORATORS!!													OK
 
 * Crear la clase InitData que se pasa al constructor de Integrator junto con el tipo de app							
 	- Implementar una clase que extienda de FBInitData y contenga la info necesaria para iniciar una FB App
@@ -20,13 +20,14 @@ Que feed tenga un isLeaf() y un getChilds(). Lo vemos a ver que nos van diciendo
 	generico y no se como engancharlo de forma prolija.
 
 * FBContentManaget.getFeeds solo trae posts y comments.
-	- Hacer que no busque comments de posts que ya se sabe que no tienen.
-	- Guardar el post id y numero de comentarios que tenia el post para saber en la proxima si tiene nuevos comments o solo likes
+	- Hacer que no busque comments de posts que ya se sabe que no tienen.											OK
+	- Guardar el post id y numero de comentarios que tenia el post para saber										OK
+	en la proxima si tiene nuevos comments o solo likes
 	
 * PostDao ahora usa como limite 300 posts (con mas se tilda Facebook)
-	- En caso de alcanzar ese limite (menos un umbral, por que siempre pido 300 y llegan 295) 
-	hay que volver a pedir mas comments cambiando la fecha pivote del request.
-	Tambien hay que tener cuidado al mergear los proximos que se traes para asegurarnos que no se repitan.	
+	- En caso de alcanzar ese limite (menos un umbral, por que siempre pido 300 y llegan 295) 						
+	hay que volver a pedir mas comments cambiando la fecha pivote del request.										OK
+	- Tambien hay que tener cuidado al mergear los proximos que se traes para asegurarnos que no se repitan.	
 	
 * Crear clase Feed:																									OK
 	- Las clases Post y Comment ahora extienden de Feed																Changed

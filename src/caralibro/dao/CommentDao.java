@@ -22,6 +22,21 @@ public class CommentDao {
 	public static Collection<Comment> getFromPost(Application application, Session session, Post post) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, session, "Stream.getComments");
 		params.put("post_id", post.getId());
+		return makeRequest(application, session, params);
+	}
+	
+	// Retrieve comments recently created ìn posts whose author is the Fan Page (Ex: Mauricio Macri)
+	public static Collection<Comment> get(Application application, Session session, Long startTime, String sourceId) throws Exception {
+		Map<String,String> params = RequestFactory.create(application, session, "fql.query");
+		String query = "SELECT id, fromid, text, time FROM comment " +
+						"WHERE post_id IN " +
+							"(SELECT post_id FROM stream WHERE source_id = " + sourceId + " AND actor_id = " + sourceId + " LIMIT 2000) " +
+						"AND time > " + startTime;
+		params.put("query", query);
+		return makeRequest(application, session, params);
+	}
+	
+	private static Collection<Comment> makeRequest(Application application, Session session, Map<String, String> params) throws Exception {
 		RequestFactory.sign(params, application, session);
 		String commentsJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
 		// Warning: If there are no comments the response is like this
@@ -42,12 +57,6 @@ public class CommentDao {
 			}			
 		}
 		return comments;
-	}
-	
-	// TODO:
-	public static Collection<Comment> get(Application application, Session session, Long startTime, Long endTime) {
-		// SELECT id, fromid, text, time FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE source_id = 55432788477 AND actor_id = 55432788477 LIMIT 2000) AND time > 1268369670
-		return null;
 	}
 	
 	public static boolean remove(Application application, Session session, Comment comment) throws Exception {

@@ -23,6 +23,7 @@ import caralibro.model.data.User;
 public class PostDao {
 	// By trial an error this was my calculated max number of posts that can be retrieved. More and you get an HTTP 500 error or an empty array.
 	private static final String MAX_LIMIT = "300";
+	private static final String DELTA = "10";
 	
 	// Return a collection of posts or null if there are no posts.
 	// Use time only if it is not null.
@@ -52,17 +53,24 @@ public class PostDao {
 		}
 		Collection<Post> posts = new ArrayList<Post>();
 		JSONArray postsJsonArray = streamJsonObject.getJSONArray("posts");
+		Post post = null;
 		for (int i = 0; i < postsJsonArray.length(); i++) {
 			// Get that index value as a string and PostFactory must know how to parse it!
 			String postString = postsJsonArray.optString(i);
 			if (postString != null && !postString.isEmpty()) {
-				Post post = PostFactory.create(postString);
+				post = PostFactory.create(postString);
 				if (post != null) {
 					posts.add(post);
 				}
 			}
 		}
-		// TODO: If there are more posts, re call this function and add to the list!
+
+		// TODO: Consider repeated values
+		if (posts.size() > Integer.parseInt(MAX_LIMIT) - Integer.parseInt(DELTA)) {
+			System.out.println("LIMIT REACHED: MAKING ANOTHER REQUEST!!!!!!!!!!!!!");
+			posts.addAll(getFromSourceId(application, session, sourceId, startTime, post.getUpdateTime()));
+		}
+		
 		return posts;
 	}
 	

@@ -17,6 +17,7 @@ public class Post {
 	private Integer likes = null;	
 	private Long creationTime = null;
 	private Long updateTime = null;
+	private String permaLink = null;
 
 	public Post() {
 	}
@@ -99,6 +100,14 @@ public class Post {
 
 	public void setUpdateTime(Long updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getPermaLink() {
+		return permaLink;
+	}
+
+	public void setPermaLink(String permaLink) {
+		this.permaLink = permaLink;
 	}
 
 }

@@ -49,12 +49,6 @@ public class PostFeed implements Feed {
 	public List<String> getLinkUrls() {
 		return post.getLinkUrls();
 	}
-	
-	@Override
-	public String getPermaLink() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Long getCreationTime() {
@@ -66,10 +60,14 @@ public class PostFeed implements Feed {
 		return post.getUpdateTime();
 	}
 
+	@Override
+	public String getPermaLink() {
+		return post.getPermaLink();
+	}
+
 //	@Override
 //	public int getType() {
 //		// TODO Auto-generated method stub
 //		return 0;
 //	}
-	
 }

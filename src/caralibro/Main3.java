@@ -36,7 +36,6 @@ public class Main3 {
 			if (newFeeds != null) {
 				for (Feed feed : newFeeds) {
 					System.out.println("Feed:" + feed.getText());
-					System.out.println("Feed:" + feed.getUpdateTime());
 				}
 			}
 			Thread.sleep(6000);

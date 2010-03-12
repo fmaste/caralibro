@@ -9,7 +9,8 @@ import caralibro.model.data.Post;
 public class PostFactory {
 
 	// TODO: And the user??
-	public static Post create(String id, String message, ArrayList<String> photoUrls, ArrayList<String> videoUrls, ArrayList<String> linkUrls, Integer comments, Integer likes, Long creationTime, Long updateTime) {
+	public static Post create(String id, String message, ArrayList<String> photoUrls, ArrayList<String> videoUrls, ArrayList<String> linkUrls, 
+			Integer comments, Integer likes, Long creationTime, Long updateTime, String permaLink) {
 		Post post = new Post();
 		post.setId(id);
 		post.setText(message);
@@ -26,6 +27,7 @@ public class PostFactory {
 		}
 		post.setComments(comments);
 		post.setLikes(likes);
+		post.setPermaLink(permaLink);
 		return post;
 	}
 	
@@ -62,7 +64,8 @@ public class PostFactory {
 		}				
 		Long updateTime = postJsonObject.getLong("updated_time");
 		Long creationTime = postJsonObject.getLong("created_time");
-		return create(id, text, photoUrls, videoUrls, linkUrls, comments, likes, creationTime, updateTime);
+		String permaLink = postJsonObject.getString("permalink");
+		return create(id, text, photoUrls, videoUrls, linkUrls, comments, likes, creationTime, updateTime, permaLink);
 	}
 
 	private static ArrayList<String> getPhotoUrls(JSONObject postJsonObject) {		

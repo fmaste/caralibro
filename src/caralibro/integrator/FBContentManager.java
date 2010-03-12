@@ -55,16 +55,21 @@ public class FBContentManager implements ContentManager {
 		Long startTime = nextUpdateStartTime;
 		if (startTime == null) {
 			// Start time defaults to the past 24 hours
-			startTime = System.currentTimeMillis()/1000 - 14L*60L*60L;
+			startTime = System.currentTimeMillis()/1000 - 900L*60L*60L;
 		}
 		nextUpdateStartTime = System.currentTimeMillis()/1000;
-		Collection<Post> posts = PostDao.getFromSourceId(application, session, sourceId, startTime, System.currentTimeMillis()/1000 - 12L*60L*60L);	
+		
+		// This request uses the post's update_time. Posts with more than ~~ 50 comments have their update broken and
+		// wont' be retrieved. However, it is still useful to add recently created posts and Fan's posts comments (usually have few comments)
+		Collection<Post> posts = PostDao.getFromSourceId(application, session, sourceId, startTime, nextUpdateStartTime);	
 		Collection<Feed> feeds = new ArrayList<Feed>();
 		if (posts != null) {
 			for (Post post : posts) {
+				// add recently created posts
 				if (post.getCreationTime() != null && post.getCreationTime() > startTime) {
 					feeds.add(new TypedFeed(new  PostFeed(post), FeedType.POST.hashCode()));
 				}
+				// add recently created comments
 				if (post.getComments() == null || post.getComments() > 0) {
 					Integer postComments = postIdCommentCount.get(post.getId());
 					if (postComments == null || (post.getComments() != null && postComments < post.getComments())) {
@@ -79,9 +84,29 @@ public class FBContentManager implements ContentManager {
 						}
 					}
 				}
+				// save the actual amount of comments
 				postIdCommentCount.put(post.getId(), post.getComments());
 			}
 		}
+		
+		// TODO: avoid retrieving in FQL comments that were already added
+		// This may happend with posts from the Fan Page that still don't have more than ~~ 50 comments
+		// How does it treat repeated values?
+		
+		// Make a second request to get new comments in posts with more than ~~ 50 comments and
+		// whose author is the Fan page (Ex: Mauricio Macri)
+		// to do this we ask for comments creation time instead of the post update_time. 
+		// These functionality isn't available through the REST api so it must be done through FQL
+		Collection<Comment> comments = CommentDao.get(application, session, startTime, sourceId);
+		if (comments != null) {
+			for (Comment comment : comments) {
+				// This should have been checked in the query, do it anyway
+				if (comment.getCreationTime() != null && comment.getCreationTime() > startTime) {
+					feeds.add(new TypedFeed(new CommentFeed(comment), FeedType.COMMENT.hashCode()));
+				}
+			}
+		}
+		
 		return feeds;
 	}
 	

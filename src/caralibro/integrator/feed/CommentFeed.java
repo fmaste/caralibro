@@ -52,8 +52,7 @@ public class CommentFeed implements Feed {
 
 	@Override
 	public String getPermaLink() {
-		// TODO Auto-generated method stub
-		return null;
+		return comment.getPostPermaLink();
 	}
 	
 	@Override
