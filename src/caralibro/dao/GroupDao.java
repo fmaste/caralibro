@@ -4,25 +4,29 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONArray;
-import caralibro.Rest;
 import caralibro.factory.GroupFactory;
 import caralibro.factory.RequestFactory;
-import caralibro.model.constants.Facebook;
 import caralibro.model.data.Application;
 import caralibro.model.data.Group;
 import caralibro.model.data.Session;
 
 public class GroupDao {
 	
+	/*
+	 * @return If there are no groups returns null or empty
+	 */
 	public static Collection<Group> getFromUser(Application application, Session session) throws Exception {
 		Map<String,Group> groupsMap = getFromUserByName(application, session);
 		return groupsMap.values();
 	}
 	
+	/*
+	 * @return If there are no groups returns null or empty
+	 */
 	public static Map<String,Group> getFromUserByName(Application application, Session session) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, session, "Groups.get");
 		RequestFactory.sign(params, application, session);
-		String groupsJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
+		String groupsJsonResponse = ResponseDao.get(params);
 		// Warning: If there are no groups the response is like this
 		// Response: {}
 		if (groupsJsonResponse == null || groupsJsonResponse.isEmpty() || !groupsJsonResponse.startsWith("[")) {

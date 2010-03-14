@@ -1,21 +1,30 @@
 package caralibro.model.data;
 
-public class User {
-	// The user ID is a 64-bit int datatype. 
-	// If you're storing it in a MySQL database, use the BIGINT unsigned datatype. 
-	// For Facebook Connect for iPhone, format the user ID as a long long.
+public class User implements Party {
 	private Long id = null;
-	// TODO: name
+	private String name = null;
 	
 	public User() {
 	}
 	
+	@Override
 	public Long getId() {
 		return this.id;
 	}
 	
+	@Override
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

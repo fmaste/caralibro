@@ -64,11 +64,5 @@ public class CommentFeed implements Feed {
 	public Long getUpdateTime() {
 		return comment.getCreationTime();
 	}
-	
-//	@Override
-//	public int getType() {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 
 }

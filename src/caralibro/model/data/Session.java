@@ -4,7 +4,7 @@ public class Session {
 	private String key = null;
 	private String secret = null;
 	private User user = null;
-	private Long expirationTime = null; // In Unix time
+	private Long expirationTime = null; // Unix time in seconds, not milliseconds
 	
 	public Session() {
 	}
@@ -33,6 +33,9 @@ public class Session {
 		this.user = user;
 	}
 
+	/*
+	 * @return Unix time in seconds, not milliseconds
+	 */
 	public Long getExpirationTime() {
 		return expirationTime;
 	}

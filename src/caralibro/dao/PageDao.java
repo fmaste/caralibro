@@ -4,10 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONArray;
-import caralibro.Rest;
 import caralibro.factory.PageFactory;
 import caralibro.factory.RequestFactory;
-import caralibro.model.constants.Facebook;
 import caralibro.model.data.Application;
 import caralibro.model.data.Page;
 import caralibro.model.data.Session;
@@ -23,7 +21,7 @@ public class PageDao {
 		Map<String,String> params = RequestFactory.create(application, session, "Pages.getInfo");
 		params.put("fields", "page_id,name"); // page_id is always returned (whether included in fields or not, and always as the first subelement)
 		RequestFactory.sign(params, application, session);
-		String pagesJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
+		String pagesJsonResponse = ResponseDao.get(params);
 		// Warning: If there are no pages the response is like this
 		// Response: {}
 		if (pagesJsonResponse == null || pagesJsonResponse.isEmpty() || !pagesJsonResponse.startsWith("[")) {

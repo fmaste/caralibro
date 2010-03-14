@@ -65,9 +65,4 @@ public class PostFeed implements Feed {
 		return post.getPermaLink();
 	}
 
-//	@Override
-//	public int getType() {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 }

@@ -16,7 +16,7 @@ public class RequestFactory {
 		params.put("v", "1.0");
 		params.put("format", "json");
 		params.put("api_key", application.getKey());
-		params.put("call_id", String.valueOf(System.currentTimeMillis()/1000)); // An auto-generated call id
+		params.put("call_id", String.valueOf(System.currentTimeMillis())); // An auto-generated call id
 		params.put("method", method);
 		return params;
 	}

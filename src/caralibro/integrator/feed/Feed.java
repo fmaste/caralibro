@@ -18,9 +18,15 @@ public interface Feed {
 
 	public String getPermaLink();
 	
+	/*
+	 * @return Unix time in seconds, not milliseconds
+	 */
 	public Long getCreationTime();
 	
 	// TODO: When there is no update time, use the creation time or null to differ when there are no updates ?
+	/*
+	 * @return Unix time in seconds, not milliseconds
+	 */
 	public Long getUpdateTime();
 		
 }

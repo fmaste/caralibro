@@ -7,16 +7,18 @@ import java.util.List;
 // Posts can have links, photos, videos, likes and comments!
 // The update time of the post refers to new comments and likes!
 public class Post {
+	// TODO: Find why it is not a Long instead of String!
+	// It is composed of sourceId_postId
 	private String id = null;
 	private User user = null;
 	private String text = null;	
 	private ArrayList<String> photoUrls = null;
 	private ArrayList<String> videoUrls = null;
 	private ArrayList<String> linkUrls = null;
-	private Integer comments = null;
-	private Integer likes = null;	
-	private Long creationTime = null;
-	private Long updateTime = null;
+	private Integer comments = null; // Comments count
+	private Integer likes = null;	 // Likes count
+	private Long creationTime = null; // Unix time in seconds, not milliseconds
+	private Long updateTime = null; // Unix time in seconds, not milliseconds
 	private String permaLink = null;
 
 	public Post() {
@@ -86,6 +88,9 @@ public class Post {
 		this.likes = likes;
 	}
 
+	/*
+	 * @return Unix time in seconds, not milliseconds
+	 */
 	public Long getCreationTime() {
 		return creationTime;
 	}
@@ -94,6 +99,9 @@ public class Post {
 		this.creationTime = creationTime;
 	}
 	
+	/*
+	 * @return Unix time in seconds, not milliseconds
+	 */
 	public Long getUpdateTime() {
 		return updateTime;
 	}

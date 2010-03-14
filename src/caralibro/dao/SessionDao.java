@@ -2,10 +2,8 @@ package caralibro.dao;
 
 import java.util.Map;
 
-import caralibro.Rest;
 import caralibro.factory.RequestFactory;
 import caralibro.factory.SessionFactory;
-import caralibro.model.constants.Facebook;
 import caralibro.model.data.Application;
 import caralibro.model.data.Session;
 
@@ -16,7 +14,7 @@ public class SessionDao {
 		params.put("auth_token", authToken);
 		params.put("generate_session_secret", "1");
 		RequestFactory.sign(params, application);
-		String sessionJsonResponse = Rest.makeRequest(Facebook.REST_SERVER, params);
+		String sessionJsonResponse = ResponseDao.get(params);
 		return SessionFactory.create(sessionJsonResponse);		
 	}
 	

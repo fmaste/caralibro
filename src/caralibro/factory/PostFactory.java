@@ -5,14 +5,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import caralibro.model.data.Post;
+import caralibro.model.data.User;
 
 public class PostFactory {
 
 	// TODO: And the user??
-	public static Post create(String id, String message, ArrayList<String> photoUrls, ArrayList<String> videoUrls, ArrayList<String> linkUrls, 
+	public static Post create(String id, User user, String message, ArrayList<String> photoUrls, ArrayList<String> videoUrls, ArrayList<String> linkUrls, 
 			Integer comments, Integer likes, Long creationTime, Long updateTime, String permaLink) {
 		Post post = new Post();
 		post.setId(id);
+		post.setUser(user);
 		post.setText(message);
 		post.setCreationTime(creationTime);
 		post.setUpdateTime(updateTime);
@@ -39,10 +41,14 @@ public class PostFactory {
 		// TODO: Check for this keys or keep it like an exception ?
 		String id = postJsonObject.getString("post_id");
 		String text = postJsonObject.getString("message");
-		// TODO: Which one is the user that created the post ??
+		// FIXME: Which one is the user that created the post ??
 		Long viewerId = postJsonObject.getLong("viewer_id");
 		Long sourceId = postJsonObject.getLong("source_id");
 		Long actorId = postJsonObject.getLong("actor_id");
+		User user = null;
+		if (actorId != null ) {
+			user = UserFactory.create(actorId);
+		}
 		// FIXME: Gives error sometimes, but the string is there!
 		// Maybe the key is sometimes a string sometimes a long like with page id and post id
 		// Long targetId = postJsonObject.getLong("target_id");
@@ -65,7 +71,7 @@ public class PostFactory {
 		Long updateTime = postJsonObject.getLong("updated_time");
 		Long creationTime = postJsonObject.getLong("created_time");
 		String permaLink = postJsonObject.getString("permalink");
-		return create(id, text, photoUrls, videoUrls, linkUrls, comments, likes, creationTime, updateTime, permaLink);
+		return create(id, user, text, photoUrls, videoUrls, linkUrls, comments, likes, creationTime, updateTime, permaLink);
 	}
 
 	private static ArrayList<String> getPhotoUrls(JSONObject postJsonObject) {		
