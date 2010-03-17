@@ -14,7 +14,12 @@ import caralibro.model.data.Post;
 import caralibro.model.data.Session;
 import caralibro.model.data.User;
 
-// Before you can get data from a user's stream, you need the extended permission "read_stream".
+/*
+ * Before you can get data from a user's stream, you need the extended permission "read_stream".
+ * 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class PostDao {
 	// By trial an error this was my calculated max number of posts that can be retrieved. More and you get an HTTP 500 error or an empty array.
 	private static final String MAX_LIMIT = "300";

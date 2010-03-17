@@ -1,10 +1,13 @@
 package caralibro.factory;
 
 import org.json.JSONObject;
-
 import caralibro.model.data.Session;
 import caralibro.model.data.User;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class SessionFactory {
 
 	public static Session create(String key, String secret, User user, Long expirationTime) {

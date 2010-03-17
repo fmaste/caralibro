@@ -1,10 +1,13 @@
 package caralibro.dao;
 
 import java.util.Map;
-
 import caralibro.factory.RequestFactory;
 import caralibro.model.data.Application;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class LoginDao {
 
 	public static String generateAuthenticationToken(Application application) throws Exception {

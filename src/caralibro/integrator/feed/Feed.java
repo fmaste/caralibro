@@ -2,6 +2,10 @@ package caralibro.integrator.feed;
 
 import java.util.List;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public interface Feed {
 	
 	public String getId();

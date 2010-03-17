@@ -1,9 +1,12 @@
 package caralibro.factory;
 
 import org.json.JSONObject;
-
 import caralibro.model.data.Group;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class GroupFactory {
 	
 	public static Group create(Long id, String name) {

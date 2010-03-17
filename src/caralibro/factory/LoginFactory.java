@@ -2,7 +2,12 @@ package caralibro.factory;
 
 import caralibro.model.data.Application;
 
-// Used to login your application (get a valid session). You can pass some extended permissions to the login url.
+/*
+ *Used to login your application (get a valid session). You can pass some extended permissions to the login url.
+ *
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class LoginFactory {
 	
 	public static String createUrlFromAuthenticationToken(Application application, String authenticationToken) {

@@ -7,9 +7,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
-
 import caralibro.model.constants.Facebook;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class ResponseDao {
 
 	public static String get(Map<String,String> param) throws Exception {

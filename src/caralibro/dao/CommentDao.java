@@ -11,6 +11,10 @@ import caralibro.model.data.Comment;
 import caralibro.model.data.Post;
 import caralibro.model.data.Session;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class CommentDao {
 
 	/*
@@ -23,7 +27,7 @@ public class CommentDao {
 	}
 	
 	/*
-	 * Retrieve comments recently created ìn posts whose author is the Fan Page (Ex: Mauricio Macri)
+	 * Retrieve comments recently created ï¿½n posts whose author is the Fan Page (Ex: Mauricio Macri)
 	 * 
 	 * @return If there are no comments returns null or empty
 	 */

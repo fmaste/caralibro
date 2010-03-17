@@ -2,6 +2,10 @@ package caralibro.integrator.feed;
 
 import java.util.List;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class TypedFeed implements Feed {
 	private Feed feed;
 	private int type;

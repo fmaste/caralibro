@@ -1,9 +1,12 @@
 package caralibro.integrator.feed;
 
 import java.util.List;
-
 import caralibro.model.data.Comment;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class CommentFeed implements Feed {
 	private Comment comment = null;
 	

@@ -2,6 +2,10 @@ package caralibro.factory;
 
 import caralibro.model.data.Application;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class AuthorizationFactory {
 	
 	public static String createUrl(Application application, String extendedPermissions) {

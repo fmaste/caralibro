@@ -1,5 +1,9 @@
 package caralibro.model.data;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public interface Party {
 	
 	// The user ID is a 64-bit int datatype. 

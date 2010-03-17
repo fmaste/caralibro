@@ -1,9 +1,12 @@
 package caralibro.integrator.feed;
 
 import java.util.List;
-
 import caralibro.model.data.Post;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class PostFeed implements Feed {
 	private Post post = null;
 	

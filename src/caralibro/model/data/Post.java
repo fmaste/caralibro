@@ -3,9 +3,14 @@ package caralibro.model.data;
 import java.util.ArrayList;
 import java.util.List;
 
-// Almost everything in Facebook is a post.
-// Posts can have links, photos, videos, likes and comments!
-// The update time of the post refers to new comments and likes!
+/*
+ * Almost everything in Facebook is a post.
+ * Posts can have links, photos, videos, likes and comments!
+ * The update time of the post refers to new comments and likes!
+ *  
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class Post {
 	// TODO: Find why it is not a Long instead of String!
 	// It is composed of sourceId_postId

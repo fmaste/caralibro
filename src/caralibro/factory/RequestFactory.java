@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import caralibro.model.data.Application;
 import caralibro.model.data.Session;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class RequestFactory {
 	
 	public static Map<String,String> create(Application application, String method) {

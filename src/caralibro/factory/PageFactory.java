@@ -1,9 +1,12 @@
 package caralibro.factory;
 
 import org.json.JSONObject;
-
 import caralibro.model.data.Page;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class PageFactory {
 
 	public static Page create(Long id, String name) {

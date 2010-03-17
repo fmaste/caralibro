@@ -7,6 +7,10 @@ import org.json.JSONObject;
 import caralibro.model.data.Post;
 import caralibro.model.data.User;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class PostFactory {
 
 	// TODO: And the user??

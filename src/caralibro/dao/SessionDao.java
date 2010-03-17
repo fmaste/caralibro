@@ -1,12 +1,15 @@
 package caralibro.dao;
 
 import java.util.Map;
-
 import caralibro.factory.RequestFactory;
 import caralibro.factory.SessionFactory;
 import caralibro.model.data.Application;
 import caralibro.model.data.Session;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class SessionDao {
 
 	public static Session getFromToken(Application application, String authToken) throws Exception {

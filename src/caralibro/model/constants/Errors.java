@@ -3,6 +3,10 @@ package caralibro.model.constants;
 import java.util.HashMap;
 import java.util.Map;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class Errors {
 	private static final Map<Integer,String> ERRORS_MAP = createErrorsMap();
 	

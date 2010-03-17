@@ -10,6 +10,10 @@ import caralibro.model.data.Application;
 import caralibro.model.data.Group;
 import caralibro.model.data.Session;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class GroupDao {
 	
 	/*

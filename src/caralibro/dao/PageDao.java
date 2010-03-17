@@ -10,6 +10,10 @@ import caralibro.model.data.Application;
 import caralibro.model.data.Page;
 import caralibro.model.data.Session;
 
+/* 
+ * @author		Federico Pascual Mastellone (fmaste@gmail.com)
+ * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
+ */ 
 public class PageDao {
 
 	public static Collection<Page> getFromUser(Application application, Session session) throws Exception {
