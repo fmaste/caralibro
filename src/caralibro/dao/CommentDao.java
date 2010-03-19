@@ -16,7 +16,22 @@ import caralibro.model.data.Session;
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
 public class CommentDao {
-
+	
+	/*
+	 * Retrieve comments recently created �n posts whose author is the Fan Page (Ex: Mauricio Macri)
+	 * 
+	 * @return If there are no comments returns null or empty
+	 */
+	public static Collection<Comment> get(Application application, Session session, String sourceId, Long startTime) throws Exception {
+		Map<String,String> params = RequestFactory.create(application, session, "fql.query");
+		String query = "SELECT id, fromid, text, time FROM comment " +
+		"WHERE post_id IN " +
+		"(SELECT post_id FROM stream WHERE source_id = " + sourceId + " AND actor_id = " + sourceId + " LIMIT 2000) " +
+		"AND time > " + startTime;
+		params.put("query", query);
+		return makeRequest(application, session, params);
+	}
+	
 	/*
 	 * @return If there are no comments returns null or empty
 	 */
@@ -25,22 +40,7 @@ public class CommentDao {
 		params.put("post_id", post.getId());
 		return makeRequest(application, session, params);
 	}
-	
-	/*
-	 * Retrieve comments recently created �n posts whose author is the Fan Page (Ex: Mauricio Macri)
-	 * 
-	 * @return If there are no comments returns null or empty
-	 */
-	public static Collection<Comment> get(Application application, Session session, Long startTime, String sourceId) throws Exception {
-		Map<String,String> params = RequestFactory.create(application, session, "fql.query");
-		String query = "SELECT id, fromid, text, time FROM comment " +
-						"WHERE post_id IN " +
-							"(SELECT post_id FROM stream WHERE source_id = " + sourceId + " AND actor_id = " + sourceId + " LIMIT 2000) " +
-						"AND time > " + startTime;
-		params.put("query", query);
-		return makeRequest(application, session, params);
-	}
-	
+
 	private static Collection<Comment> makeRequest(Application application, Session session, Map<String, String> params) throws Exception {
 		RequestFactory.sign(params, application, session);
 		String commentsJsonResponse = ResponseDao.get(params);
@@ -69,7 +69,7 @@ public class CommentDao {
 		params.put("comment_id", comment.getId());
 		RequestFactory.sign(params, application, session);
 		String response = ResponseDao.get(params);
-		if (response != null && !response.isEmpty() && response.equals("true")) {
+		if (response != null && !response.isEmpty() && response.equalsIgnoreCase("true")) {
 			return true;
 		} else {
 			return false;

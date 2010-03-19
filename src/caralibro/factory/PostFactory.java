@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import caralibro.model.data.Group;
+import caralibro.model.data.Page;
 import caralibro.model.data.Post;
 import caralibro.model.data.User;
 
@@ -124,6 +126,36 @@ public class PostFactory {
 			return linkUrls;
 		}
 		return linkUrls;
+	}
+	
+	public String getPermalink(Post post, Page page) {
+		if (post == null || post.getId() == null || !post.getId().contains("_") || post.getId().startsWith("_") || post.getId().endsWith("_")) {
+			return null;
+		}
+		if (page == null || page.getUsername() == null || page.getUsername().isEmpty()) {
+			return null;
+		}
+		return "http://www.facebook.com/" + page.getUsername() + "?v=feed&story_fbid=" + post.getId().split("_")[1];
+	}
+
+	public String getPermalink(Post post, Group group) {
+		if (post == null || post.getId() == null || !post.getId().contains("_") || post.getId().startsWith("_") || post.getId().endsWith("_")) {
+			return null;
+		}
+		if (group == null || group.getId() == null) {
+			return null;
+		}
+		return "http://www.facebook.com/group.php?v=feed&story_fbid=" + post.getId().split("_")[1] + "&gid=" + group.getId();
+	}
+	
+	public String getPermalink(Post post, User user) {
+		if (post == null || post.getId() == null || !post.getId().contains("_") || post.getId().startsWith("_") || post.getId().endsWith("_")) {
+			return null;
+		}
+		if (user == null || user.getId() == null) {
+			return null;
+		}
+		return "http://www.facebook.com/profile.php?v=feed&story_fbid=" + post.getId().split("_")[1] + "&id=" + user.getId();
 	}
 	
 }

@@ -23,7 +23,7 @@ public class PageDao {
 	
 	public static Map<String,Page> getFromUserByName(Application application, Session session) throws Exception {
 		Map<String,String> params = RequestFactory.create(application, session, "Pages.getInfo");
-		params.put("fields", "page_id,name"); // page_id is always returned (whether included in fields or not, and always as the first subelement)
+		params.put("fields", "page_id,name,username"); // page_id is always returned (whether included in fields or not, and always as the first subelement)
 		RequestFactory.sign(params, application, session);
 		String pagesJsonResponse = ResponseDao.get(params);
 		// Warning: If there are no pages the response is like this

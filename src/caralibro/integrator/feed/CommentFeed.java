@@ -9,8 +9,9 @@ import caralibro.model.data.Comment;
  */ 
 public class CommentFeed implements Feed {
 	private Comment comment = null;
+	private String permalink = null;
 	
-	public CommentFeed(Comment comment) {
+	public CommentFeed(Comment comment, String permalink) {
 		this.comment = comment;
 	}
 	
@@ -55,7 +56,7 @@ public class CommentFeed implements Feed {
 
 	@Override
 	public String getPermaLink() {
-		return comment.getPostPermaLink();
+		return permalink;
 	}
 	
 	@Override

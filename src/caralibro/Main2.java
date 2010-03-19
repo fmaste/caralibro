@@ -114,16 +114,16 @@ public class Main2 {
 
 // By him:
 
-// Text: Mauricio Macri Mauricio recorri— las intersecciones de las calles Nazca y Avellaneda junto al Secretario General de Gobierno, Marcos Pe–a.
+// Text: Mauricio Macri Mauricio recorriï¿½ las intersecciones de las calles Nazca y Avellaneda junto al Secretario General de Gobierno, Marcos Peï¿½a.
 // Video: Recorrida por Flores [HQ]
 // Length:6:39
-// Date: February 6, 2009 at 1:27am á Comment á Like á Share
-// Extra Pablo Sebasti‡n Herrera likes this.
+// Date: February 6, 2009 at 1:27am ï¿½ Comment ï¿½ Like ï¿½ Share
+// Extra Pablo Sebastiï¿½n Herrera likes this.
 
 // By fans:
 
 // Elvira Lamarca 
-// NO HAY CON QUE DARLE, MAURICIO ES UN HACEDOR!!! NO UN HABLADOR!! SUERTE QUE LO TENEMOS COMO JEFE DE GOBIERNO DE LA CIUDAD DE BS AS!!! VAMOS PASO X PASO, CON CLARIDAD Y SIEMPRE MIRANDO PARA ADELANTE, AUNQUE EL GOBIERNO NO LE DE LOS FONDOS QUE NECESITA PARA TOOOODOOOO LO QUE HAY QUE HACER, éL PUEDE Y LO VA A HACER, VAMOS MAURICIO Y GABRIELA!!
+// NO HAY CON QUE DARLE, MAURICIO ES UN HACEDOR!!! NO UN HABLADOR!! SUERTE QUE LO TENEMOS COMO JEFE DE GOBIERNO DE LA CIUDAD DE BS AS!!! VAMOS PASO X PASO, CON CLARIDAD Y SIEMPRE MIRANDO PARA ADELANTE, AUNQUE EL GOBIERNO NO LE DE LOS FONDOS QUE NECESITA PARA TOOOODOOOO LO QUE HAY QUE HACER, ï¿½L PUEDE Y LO VA A HACER, VAMOS MAURICIO Y GABRIELA!!
 // January 27, 2009 at 1:15pm
 
 // Maria Florencia Pasarin Aristegui 

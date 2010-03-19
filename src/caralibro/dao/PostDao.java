@@ -28,6 +28,7 @@ public class PostDao {
 	// Return a collection of posts or null if there are no posts.
 	// Use time only if it is not null.
 	public static Collection<Post> getFromSourceId(Application application, Session session, String sourceId, Long startTime, Long endTime) throws Exception {
+		Long callTime = System.currentTimeMillis();
 		Map<String,String> params = RequestFactory.create(application, session, "Stream.get");
 		params.put("source_ids", sourceId);
 		params.put("limit", MAX_LIMIT); // Facebook default limit is 30
@@ -66,6 +67,12 @@ public class PostDao {
 		System.out.println("Posts request has " + posts.size() + " posts");
 		if (!posts.isEmpty() && posts.size() > (Integer.parseInt(MAX_LIMIT) - Integer.parseInt(DELTA))) {
 			System.out.println("LIMIT REACHED: MAKING ANOTHER REQUEST!!!!!!!!!!!!!");
+			// Wait at least 6 seconds between requests. Facebook allows up to 100 requests per 600 seconds.
+			Long actualTime = System.currentTimeMillis();
+			Long deltaTime = actualTime - callTime;
+			if ((deltaTime) <= 6000) {
+				Thread.sleep(6000 - deltaTime);
+			}
 			Collection<Post> morePosts = getFromSourceId(application, session, sourceId, startTime, posts.get(posts.size() - 1).getUpdateTime());
 			if (morePosts != null) {
 				posts.addAll(morePosts);

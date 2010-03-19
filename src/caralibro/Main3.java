@@ -21,11 +21,12 @@ public class Main3 {
 	private static final Long USER_ID = 100000751425511L; // Fede Testing, fmaste@yahoo.com
 	private static final Long PAGE_ID = 55432788477L;
 	private static final String PAGE_NAME = "Mauricio Macri";
+	private static final String PAGE_USERNAME = "mauriciomacri";
 	
 	public static void main(String[] args) throws Exception {
 		Application application = ApplicationFactory.create(APPLICATION_ID, API_KEY, APPLICATION_SECRET, true);
 		Session session = SessionFactory.create(SESSION_KEY, SESSION_SECRET, UserFactory.create(USER_ID), 0L);
-		Page page = PageFactory.create(PAGE_ID, PAGE_NAME);
+		Page page = PageFactory.create(PAGE_ID, PAGE_NAME, PAGE_USERNAME);
 		
 		ContentManager feeder = new FBContentManager(application, session, page);
 		
@@ -35,7 +36,11 @@ public class Main3 {
 			Collection<Feed> newFeeds = feeder.getFeeds();
 			if (newFeeds != null) {
 				for (Feed feed : newFeeds) {
-					System.out.println("Feed:" + feed.getText());
+					if (feed.getUserId() != null && feed.getUserId().equals(PAGE_ID.toString())) {
+						System.out.println("From: Mauricio Macri");	
+					}
+					System.out.println("Feed: " + feed.getText());
+					System.out.println();
 				}
 			}
 			Thread.sleep(6000);
