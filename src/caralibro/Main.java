@@ -15,10 +15,10 @@ import caralibro.factory.AuthorizationFactory;
 import caralibro.factory.LoginFactory;
 import caralibro.factory.SessionFactory;
 import caralibro.model.data.Application;
-import caralibro.model.data.Comment;
 import caralibro.model.data.Page;
-import caralibro.model.data.Post;
 import caralibro.model.data.Session;
+import caralibro.model.data.stream.Comment;
+import caralibro.model.data.stream.Post;
 
 // Setting Up Your Application:
 

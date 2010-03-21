@@ -9,12 +9,12 @@ import caralibro.integrator.feed.Feed;
 import caralibro.integrator.feed.PostFeed;
 import caralibro.integrator.feed.TypedFeed;
 import caralibro.model.data.Application;
-import caralibro.model.data.Comment;
 import caralibro.model.data.Group;
 import caralibro.model.data.Page;
-import caralibro.model.data.Post;
 import caralibro.model.data.Session;
 import caralibro.model.data.User;
+import caralibro.model.data.stream.Comment;
+import caralibro.model.data.stream.Post;
 
 public class FBContentManager implements ContentManager {	
 	private static enum SourceType {PAGE, GROUP, USER};

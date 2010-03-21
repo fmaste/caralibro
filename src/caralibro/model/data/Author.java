@@ -4,7 +4,7 @@ package caralibro.model.data;
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
-public interface Party {
+public interface Author {
 	
 	// The user ID is a 64-bit int datatype. 
 	// If you're storing it in a MySQL database, use the BIGINT unsigned datatype. 

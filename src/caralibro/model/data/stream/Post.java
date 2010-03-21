@@ -1,25 +1,24 @@
-package caralibro.model.data;
+package caralibro.model.data.stream;
 
-import java.util.ArrayList;
-import java.util.List;
+import caralibro.model.data.User;
 
 /*
- * Almost everything in Facebook is a post.
- * Posts can have links, photos, videos, likes and comments!
- * The update time of the post refers to new comments and likes!
+ * Almost everything in Facebook is a post. Is the main part of Facebook's stream.
+ * Things left can be Discussions, Events, Messages and Notes.
+ * Posts can have links, photos, videos, likes and comments.
+ * The update time of the post refers to new comments and likes.
+ * The problem is that this time can't be trusted because of this bug: http://bugs.developers.facebook.com/show_bug.cgi?id=5624
+ * Only users with an active session can post.
  *  
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
-public class Post {
-	// TODO: Find why it is not a Long instead of String!
+public class Post implements Stream {
 	// It is composed of sourceId_postId
 	private String id = null;
 	private User user = null;
 	private String text = null;	
-	private ArrayList<String> photoUrls = null;
-	private ArrayList<String> videoUrls = null;
-	private ArrayList<String> linkUrls = null;
+	private Link link = null;
 	private Integer comments = null; // Comments count
 	private Integer likes = null;	 // Likes count
 	private Long creationTime = null; // Unix time in seconds, not milliseconds
@@ -29,10 +28,12 @@ public class Post {
 	public Post() {
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
-
+	
+	@Override
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -45,36 +46,22 @@ public class Post {
 		this.user = user;
 	}
 
+	@Override
 	public String getText() {
 		return text;
 	}
 
+	@Override
 	public void setText(String text) {
 		this.text = text;
 	}
 
-	public List<String> getPhotoUrls() {
-		return photoUrls;
+	public Link getLink() {
+		return link;
 	}
 
-	public void setPhotoUrls(ArrayList<String> photoUrls) {
-		this.photoUrls = photoUrls;
-	}
-
-	public List<String> getVideoUrls() {
-		return videoUrls;
-	}
-
-	public void setVideoUrls(ArrayList<String> videoUrls) {
-		this.videoUrls = videoUrls;
-	}
-
-	public List<String> getLinkUrls() {
-		return linkUrls;
-	}
-
-	public void setLinkUrls(ArrayList<String> linkUrls) {
-		this.linkUrls = linkUrls;
+	public void setLink(Link link) {
+		this.link = link;
 	}
 
 	public Integer getComments() {

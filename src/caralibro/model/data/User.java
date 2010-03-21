@@ -1,10 +1,13 @@
 package caralibro.model.data;
 
+
 /* 
+ * A Facebook user can be a stream source or a stream author.
+ * 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
-public class User implements Party {
+public class User implements Source, Author {
 	private Long id = null;
 	private String name = null;
 	

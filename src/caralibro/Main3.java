@@ -36,7 +36,7 @@ public class Main3 {
 			Collection<Feed> newFeeds = feeder.getFeeds();
 			if (newFeeds != null) {
 				for (Feed feed : newFeeds) {
-					if (feed.getUserId() != null && feed.getUserId().equals(PAGE_ID.toString())) {
+					if (feed.getAuthorId() != null && feed.getAuthorId().equals(PAGE_ID.toString())) {
 						System.out.println("From: Mauricio Macri");	
 					}
 					System.out.println("Feed: " + feed.getText());

@@ -10,9 +10,9 @@ import caralibro.factory.RequestFactory;
 import caralibro.model.data.Application;
 import caralibro.model.data.Group;
 import caralibro.model.data.Page;
-import caralibro.model.data.Post;
 import caralibro.model.data.Session;
 import caralibro.model.data.User;
+import caralibro.model.data.stream.Post;
 
 /*
  * Before you can get data from a user's stream, you need the extended permission "read_stream".

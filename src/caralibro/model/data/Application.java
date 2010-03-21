@@ -1,5 +1,6 @@
 package caralibro.model.data;
 
+
 /*
  * Models a Facebook Application.
  * To create one you need to have a Facebook account. 
@@ -13,8 +14,9 @@ package caralibro.model.data;
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */
-public class Application {
+public class Application implements Source {
 	private Long id = null;
+	private String name = null;
 	private String key = null;
 	private String secret = null;
 	private Boolean desktop = null;
@@ -22,12 +24,24 @@ public class Application {
 	public Application() {
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getKey() {

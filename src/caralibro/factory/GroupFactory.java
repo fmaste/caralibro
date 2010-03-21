@@ -16,25 +16,32 @@ public class GroupFactory {
 		return group;
 	}
 	
+	/*
+	 * Parses a json string containing the group and creates the group object.
+	 * If there is no gid or name an exception is thrown.
+	 * 
+	 * @param postJsonResponse 	One of the groups retrieved on the groups json array.
+	 * @return 					A group object or null if the string is not a json object.
+	 */
 	public static Group create(String groupJsonResponse) throws Exception {
 		if (groupJsonResponse == null || groupJsonResponse.isEmpty() || !groupJsonResponse.startsWith("{")) {
 			return null;
 		}
 		JSONObject groupJsonObject = new JSONObject(groupJsonResponse);
-		String name = groupJsonObject.optString("name", null);
-		Long id = null;
-		if (groupJsonObject.has("gid")) {
-			id = groupJsonObject.getLong("gid");
-		} else {
-			if (name == null || name.isEmpty()) {
-				// Has no id and no name!!
-				return null;
-			}
-		}
+		String name = groupJsonObject.getString("name");
+		Long id = groupJsonObject.getLong("gid");		
 		return GroupFactory.create(id, name);		
 	}
 	
+	/*
+	 * @return The group's Facebook page.
+	 */
 	public static String createUrl(Group group) {
-		return "http://www.facebook.com/group.php?gid=" + group.getId();
+		if (group != null && group.getId() != null ) {
+			return "http://www.facebook.com/group.php?gid=" + group.getId();
+		} else {
+			return null;
+		}
 	}
+	
 }

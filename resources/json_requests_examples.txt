@@ -1,18 +1,377 @@
-// An example of some JSON request/responses made with user's 1443735325 session:
-// - Get posts from page 326834508374 (source_ids): 
-// Request: http://api.facebook.com/restserver.php?v=1.0&api_key=060c9d27db80e7bc1dab1f3ec1e48f63&ss=true&method=Stream.get&format=json&source_ids=326834508374&call_id=1267504281543&session_key=d10f11b7ad1fd8dc18857282-1443735325&sig=1678c2a39cd9055bcc806b0ab8b3be95
-// Response: {"posts":[{"post_id":"326834508374_349385998374","viewer_id":1443735325,"source_id":326834508374,"type":56,"app_id":null,"attribution":null,"actor_id":100000751425511,"target_id":326834508374,"message":"Fan post!","attachment":{"description":""},"app_data":{},"action_links":null,"comments":{"can_remove":true,"can_post":true,"count":2,"comment_list":[{"fromid":100000751425511,"time":1267507442,"text":"Fan comment to fan post!","id":"326834508374_349385998374_14732243"},{"fromid":326834508374,"time":1267507466,"text":"Admin comment to fan post!","id":"326834508374_349385998374_14732258"}]},"likes":{"href":"http:\/\/www.facebook.com\/social_graph.php?node_id=349385998374&class=LikeManager","count":0,"sample":{},"friends":{},"user_likes":false,"can_like":true},"privacy":{"value":"NOT_EVERYONE"},"updated_time":1267507466,"created_time":1267507407,"tagged_ids":null,"is_hidden":false,"filter_key":"","permalink":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374?v=feed&story_fbid=349385998374"},{"post_id":"326834508374_341543617371","viewer_id":1443735325,"source_id":326834508374,"type":46,"app_id":null,"attribution":null,"actor_id":326834508374,"target_id":null,"message":"Admin post!","attachment":{"description":""},"app_data":{},"action_links":null,"comments":{"can_remove":true,"can_post":true,"count":2,"comment_list":[{"fromid":100000751425511,"time":1267507429,"text":"Fan comment to admin post!","id":"326834508374_341543617371_11839285"},{"fromid":326834508374,"time":1267507474,"text":"Admin comment to admin post!","id":"326834508374_341543617371_11839310"}]},"likes":{"href":"http:\/\/www.facebook.com\/social_graph.php?node_id=341543617371&class=LikeManager","count":0,"sample":{},"friends":{},"user_likes":false,"can_like":true},"privacy":{"description":"Everyone","value":"EVERYONE","friends":"","networks":"","allow":"","deny":""},"updated_time":1267507474,"created_time":1267507389,"tagged_ids":null,"is_hidden":false,"filter_key":"","permalink":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374?v=feed&story_fbid=341543617371"}],"profiles":[{"id":100000751425511,"url":"http:\/\/www.facebook.com\/profile.php?id=100000751425511","name":"Fede Testeando","pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif","type":"user"},{"id":326834508374,"url":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374","name":"testingAFanPage","pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","type":"page"}],"albums":{}}
-// - Get comments of post 326834508374_349385998374: 
-// Request: http://api.facebook.com/restserver.php?v=1.0&api_key=060c9d27db80e7bc1dab1f3ec1e48f63&ss=true&method=Stream.getComments&format=json&post_id=326834508374_349385998374&call_id=1267504281952&session_key=d10f11b7ad1fd8dc18857282-1443735325&sig=f174f628c658dba5d0bcda6c1ae989bc
-// Response: [{"fromid":100000751425511,"time":1267507442,"text":"Fan comment to fan post!","id":"326834508374_349385998374_14732243"},{"fromid":326834508374,"time":1267507466,"text":"Admin comment to fan post!","id":"326834508374_349385998374_14732258"}]
-// - Remove post 326834508374_349385998374:
-// Request: http://api.facebook.com/restserver.php?v=1.0&api_key=060c9d27db80e7bc1dab1f3ec1e48f63&ss=true&method=Stream.remove&format=json&post_id=326834508374_349385998374&call_id=1267504300894&session_key=d10f11b7ad1fd8dc18857282-1443735325&sig=ad325b68b4eadbd80e5088ee43664c38
-// Response: true
+An example of some JSON request/responses made with user's 1443735325 session:
+- Get posts from page 326834508374 (source_ids): 
+Request: 
+	http://api.facebook.com/restserver.php?
+		v=1.0&
+		api_key=060c9d27db80e7bc1dab1f3ec1e48f63&
+		ss=true&
+		method=Stream.get&
+		format=json&
+		source_ids=326834508374&
+		call_id=1267504281543&
+		session_key=d10f11b7ad1fd8dc18857282-1443735325&
+		sig=1678c2a39cd9055bcc806b0ab8b3be95
+Response: 
+{
+	"posts":[
+		{
+			"post_id":"326834508374_349385998374",
+			"viewer_id":1443735325,
+			"source_id":326834508374,
+			"type":56,
+			"app_id":null,
+			"attribution":null,
+			"actor_id":100000751425511,
+			"target_id":326834508374,
+			"message":"Fan post!",
+			"attachment":{
+				"description":""
+			},
+			"app_data":{},
+			"action_links":null,
+			"comments":{
+				"can_remove":true,
+				"can_post":true,
+				"count":2,
+				"comment_list":[
+					{
+						"fromid":100000751425511,
+						"time":1267507442,
+						"text":"Fan comment to fan post!",
+						"id":"326834508374_349385998374_14732243"
+					},
+					{
+						"fromid":326834508374,
+						"time":1267507466,
+						"text":"Admin comment to fan post!",
+						"id":"326834508374_349385998374_14732258"
+					}
+				]
+			},
+			"likes":{
+				"href":"http:\/\/www.facebook.com\/social_graph.php?node_id=349385998374&class=LikeManager",
+				"count":0,
+				"sample":{},
+				"friends":{},
+				"user_likes":false,
+				"can_like":true
+			},
+			"privacy":{
+				"value":"NOT_EVERYONE"
+			},
+			"updated_time":1267507466,
+			"created_time":1267507407,
+			"tagged_ids":null,
+			"is_hidden":false,
+			"filter_key":"",
+			"permalink":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374?v=feed&story_fbid=349385998374"
+		},
+		{
+			"post_id":"326834508374_341543617371",
+			"viewer_id":1443735325,
+			"source_id":326834508374,
+			"type":46,
+			"app_id":null,
+			"attribution":null,
+			"actor_id":326834508374,
+			"target_id":null,
+			"message":"Admin post!",
+			"attachment":{"description":""},
+			"app_data":{},
+			"action_links":null,
+			"comments":{
+				"can_remove":true,
+				"can_post":true,
+				"count":2,
+				"comment_list":[
+					{
+						"fromid":100000751425511,
+						"time":1267507429,
+						"text":"Fan comment to admin post!",
+						"id":"326834508374_341543617371_11839285"
+					},
+					{
+						"fromid":326834508374,
+						"time":1267507474,
+						"text":"Admin comment to admin post!",
+						"id":"326834508374_341543617371_11839310"
+					}
+				]
+			},
+			"likes":{
+				"href":"http:\/\/www.facebook.com\/social_graph.php?node_id=341543617371&class=LikeManager",
+				"count":0,
+				"sample":{},
+				"friends":{},
+				"user_likes":false,
+				"can_like":true
+			},
+			"privacy":{
+				"description":"Everyone",
+				"value":"EVERYONE",
+				"friends":"",
+				"networks":"",
+				"allow":"",
+				"deny":""
+			},
+			"updated_time":1267507474,
+			"created_time":1267507389,
+			"tagged_ids":null,
+			"is_hidden":false,
+			"filter_key":"",
+			"permalink":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374?v=feed&story_fbid=341543617371"
+		}
+	],
+	"profiles":[
+		{
+			"id":100000751425511,
+			"url":"http:\/\/www.facebook.com\/profile.php?id=100000751425511",
+			"name":"Fede Testeando",
+			"pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif",
+			"type":"user"
+		},
+		{
+			"id":326834508374,
+			"url":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374",
+			"name":"testingAFanPage",
+			"pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif",
+			"type":"page"
+		}
+	],
+	"albums":{}
+}
 
-// Comment request response example
-// Request: http://api.facebook.com/restserver.php?v=1.0&api_key=060c9d27db80e7bc1dab1f3ec1e48f63&ss=true&method=Stream.getComments&format=json&post_id=1443735325_155668449205&call_id=1267683315247&session_key=7a85a2cbaf58c823c450a95d-1443735325&sig=56afb28d2d3aa042f4ac2dba6fc885f5
-// Response: [{"fromid":1062262331,"time":1255708755,"text":"No me quiero imaginar cuan al pedo estarias para ponerte con el facebook.. es la primera vez q apareces aca papaaaaa!! como andas??!!!","id":"1443735325_155668449205_6025124"},{"fromid":1443735325,"time":1255709295,"text":"Lo uso para jugar a esta porqueria que soy malisimo! jajaja","id":"1443735325_155668449205_6025449"}]
+------------------------------------------------------------------------------------------------------------------------------------------------
 
-// A Stream.get example (only one posts, no comments)
-// Request: http://api.facebook.com/restserver.php?v=1.0&api_key=060c9d27db80e7bc1dab1f3ec1e48f63&ss=true&method=Stream.get&format=json&source_ids=326834508374&call_id=1267682545637&session_key=e9088abfc1b185b9e11b0bee-1443735325&sig=b6af78537a2da6d4b640c752824ac0b2
-// Response: {"posts":[{"post_id":"326834508374_353743318374","viewer_id":1443735325,"source_id":326834508374,"type":56,"app_id":null,"attribution":null,"actor_id":100000751425511,"target_id":326834508374,"message":"Un post!","attachment":{"description":""},"app_data":{},"action_links":null,"comments":{"can_remove":true,"can_post":true,"count":0,"comment_list":{}},"likes":{"href":"http:\/\/www.facebook.com\/social_graph.php?node_id=353743318374&class=LikeManager","count":0,"sample":{},"friends":{},"user_likes":false,"can_like":true},"privacy":{"value":"NOT_EVERYONE"},"updated_time":1267681759,"created_time":1267681759,"tagged_ids":null,"is_hidden":false,"filter_key":"","permalink":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374?v=feed&story_fbid=353743318374"}],"profiles":[{"id":100000751425511,"url":"http:\/\/www.facebook.com\/profile.php?id=100000751425511","name":"Fede Testeando","pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif","type":"user"},{"id":326834508374,"url":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374","name":"testingAFanPage","pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif","type":"page"}],"albums":{}}
+- Get comments of post 326834508374_349385998374: 
+Request: 
+	http://api.facebook.com/restserver.php?
+		v=1.0&
+		api_key=060c9d27db80e7bc1dab1f3ec1e48f63&
+		ss=true&
+		method=Stream.getComments&
+		format=json&
+		post_id=326834508374_349385998374&
+		call_id=1267504281952&
+		session_key=d10f11b7ad1fd8dc18857282-1443735325&
+		sig=f174f628c658dba5d0bcda6c1ae989bc
+Response: 
+[
+	{
+		"fromid":100000751425511,
+		"time":1267507442,
+		"text":"Fan comment to fan post!",
+		"id":"326834508374_349385998374_14732243"
+	},
+	{
+		"fromid":326834508374,
+		"time":1267507466,
+		"text":"Admin comment to fan post!",
+		"id":"326834508374_349385998374_14732258"
+	}
+]
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Remove post 326834508374_349385998374:
+Request: 
+	http://api.facebook.com/restserver.php?
+		v=1.0&
+		api_key=060c9d27db80e7bc1dab1f3ec1e48f63&
+		ss=true&
+		method=Stream.remove&
+		format=json&
+		post_id=326834508374_349385998374&
+		call_id=1267504300894&
+		session_key=d10f11b7ad1fd8dc18857282-1443735325&
+		sig=ad325b68b4eadbd80e5088ee43664c38
+Response: true
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Comment request response example
+Request: 
+	http://api.facebook.com/restserver.php?
+		v=1.0&
+		api_key=060c9d27db80e7bc1dab1f3ec1e48f63&
+		ss=true&
+		method=Stream.getComments&
+		format=json&
+		post_id=1443735325_155668449205&
+		call_id=1267683315247&
+		session_key=7a85a2cbaf58c823c450a95d-1443735325&
+		sig=56afb28d2d3aa042f4ac2dba6fc885f5
+Response: 
+[
+	{
+		"fromid":1062262331,
+		"time":1255708755,
+		"text":"No me quiero imaginar cuan al pedo estarias para ponerte con el facebook.. es la primera vez q apareces aca papaaaaa!! como andas??!!!",
+		"id":"1443735325_155668449205_6025124"
+	},
+	{
+		"fromid":1443735325,
+		"time":1255709295,
+		"text":"Lo uso para jugar a esta porqueria que soy malisimo! jajaja",
+		"id":"1443735325_155668449205_6025449"
+	}
+]
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+A Stream.get example (only one posts, no comments)
+Request: 
+	http://api.facebook.com/restserver.php?
+		v=1.0&
+		api_key=060c9d27db80e7bc1dab1f3ec1e48f63&
+		ss=true&
+		method=Stream.get&
+		format=json&
+		source_ids=326834508374&
+		call_id=1267682545637&
+		session_key=e9088abfc1b185b9e11b0bee-1443735325&
+		sig=b6af78537a2da6d4b640c752824ac0b2
+Response: 
+{
+	"posts":[
+		{
+			"post_id":"326834508374_353743318374",
+			"viewer_id":1443735325,
+			"source_id":326834508374,
+			"type":56,
+			"app_id":null,
+			"attribution":null,
+			"actor_id":100000751425511,
+			"target_id":326834508374,
+			"message":"Un post!",
+			"attachment":{
+				"description":""
+			},
+			"app_data":{},
+			"action_links":null,
+			"comments":{
+				"can_remove":true,
+				"can_post":true,
+				"count":0,
+				"comment_list":{}
+			},
+			"likes":{
+				"href":"http:\/\/www.facebook.com\/social_graph.php?node_id=353743318374&class=LikeManager",
+				"count":0,
+				"sample":{},
+				"friends":{},
+				"user_likes":false,
+				"can_like":true
+			},
+			"privacy":{
+				"value":"NOT_EVERYONE"
+			},
+			"updated_time":1267681759,
+			"created_time":1267681759,
+			"tagged_ids":null,
+			"is_hidden":false,
+			"filter_key":"",
+			"permalink":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374?v=feed&story_fbid=353743318374"
+		}
+	],
+	"profiles":[
+		{
+			"id":100000751425511,
+			"url":"http:\/\/www.facebook.com\/profile.php?id=100000751425511",
+			"name":"Fede Testeando",
+			"pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_silhouette.gif",
+			"type":"user"
+		},
+		{
+			"id":326834508374,
+			"url":"http:\/\/www.facebook.com\/pages\/testingAFanPage\/326834508374",
+			"name":"testingAFanPage",
+			"pic_square":"http:\/\/static.ak.fbcdn.net\/pics\/q_default.gif",
+			"type":"page"
+		}
+	],
+	"albums":{}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example of a www.gogle.com link! Only one web link can be included on the post!
+"attachment":{
+	"media":[
+		{
+			"href":"http:\/\/www.facebook.com\/l.php?u=http%253A%252F%252Fwww.google.com&h=714c28c9dda7c9d1ce3574d7f358d303",
+			"type":"link",
+			"src":"http:\/\/external.ak.fbcdn.net\/safe_image.php?d=8fb6e3c5d0cd9a356675f6c449954d76&w=90&h=90&url=http%3A%2F%2Fwww.google.com%2Fintl%2Fen_ALL%2Fimages%2Flogo.gif"
+		}
+	],
+	"name":"Google",
+	"href":"http:\/\/www.facebook.com\/l.php?u=http%253A%252F%252Fwww.google.com&h=714c28c9dda7c9d1ce3574d7f358d303",
+	"caption":"www.google.com",
+	"description":"",
+	"properties":{},
+	"icon":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/zAXEX\/hash\/9yvl71tw.png",
+	"fb_object_type":"","fb_object_id":""
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+A post with a photo!. The post message becomes the photo caption ("alt":"Photo!").
+Only one photo can be included on the post!
+By default the photo goes to the "Wall photos" album. ("aid":"110410388974192_39400")
+"attachment":{
+	"media":[
+		{
+			"href":"http:\/\/www.facebook.com\/photo.php?pid=249513&id=110410388974192",
+			"alt":"Photo!",
+			"type":"photo",
+			"src":"http:\/\/photos-h.ak.fbcdn.net\/hphotos-ak-ash1\/hs466.ash1\/25567_110597675622130_110410388974192_249513_5295990_s.jpg",
+			"photo":{
+				"aid":"110410388974192_39400",
+				"pid":"110410388974192_249513",
+				"owner":110410388974192,
+				"index":1,
+				"width":120,
+				"height":96
+			}
+		}
+	],
+	"href":"http:\/\/www.facebook.com\/",
+	"description":"",
+	"properties":{},
+	"icon":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z4848\/hash\/8as8iqdm.png",
+	"fb_object_type":"photo",
+	"fb_object_id":"110410388974192_249513"
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+A video post! Only one video can be included on the post!
+"attachment":{
+	"media":[
+		{
+			"href":"http:\/\/www.facebook.com\/video\/video.php?v=101103029929791",
+			"alt":"Mar 21, 2010 9:06am",
+			"type":"video",
+			"src":"http:\/\/vthumb.ak.fbcdn.net\/vthumb-ak-sf2p\/v10818\/142\/48\/100000902828212\/t100000902828212_101103029929791_478.jpg",
+			"video":{
+				"display_url":"http:\/\/www.facebook.com\/video\/video.php?v=101103029929791",
+				"source_url":"http:\/\/video.ak.facebook.com\/cfs-ak-ash1\/27607\/000\/63\/101103029929791_23110.mp4",
+				"owner":110410388974192,
+				"source_type":"raw",
+				"created_time":1269187607
+			}
+		}
+	],
+	"name":"Mar 21, 2010 9:06am",
+	"href":"http:\/\/www.facebook.com\/video\/video.php?v=101103029929791",
+	"description":"",
+	"properties":[
+		{
+			"name":"Length",
+			"text":"0:14"
+		}
+	],
+	"icon":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z6UZ4\/hash\/6z01mawk.png",
+	"fb_object_type":"video",
+	"fb_object_id":101103029929791
+}

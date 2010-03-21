@@ -1,6 +1,6 @@
 package caralibro.integrator.feed;
 
-import java.util.List;
+import java.util.Collection;
 
 /* 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
@@ -10,15 +10,15 @@ public interface Feed {
 	
 	public String getId();
 
-	public String getUserId();
+	public String getAuthorId();
 
 	public String getText();
 
-	public List<String> getPhotoUrls();
+	public Collection<String> getPhotoUrls();
 
-	public List<String> getVideoUrls();
+	public Collection<String> getVideoUrls();
 	
-	public List<String> getLinkUrls();
+	public Collection<String> getLinkUrls();
 
 	public String getPermaLink();
 	
@@ -27,7 +27,6 @@ public interface Feed {
 	 */
 	public Long getCreationTime();
 	
-	// TODO: When there is no update time, use the creation time or null to differ when there are no updates ?
 	/*
 	 * @return Unix time in seconds, not milliseconds
 	 */

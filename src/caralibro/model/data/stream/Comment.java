@@ -1,14 +1,16 @@
-package caralibro.model.data;
+package caralibro.model.data.stream;
+
+import caralibro.model.data.User;
 
 /* 
  * Comments are attached to posts and can only contain text (No photos, videos, likes, etc).
  * Can't be edited, only deleted if you have the right permissions.
+ * Only users with an active session can comment.
  * 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
 */
-public class Comment {
-	// TODO: Find why it is not a Long instead of String!
+public class Comment implements Stream {
 	// It is composed of sourceId_postId_commentId
 	private String id = null;
 	private User user = null;
@@ -19,10 +21,12 @@ public class Comment {
 	public Comment() {
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -35,10 +39,12 @@ public class Comment {
 		this.user = user;
 	}
 
+	@Override
 	public String getText() {
 		return text;
 	}
 
+	@Override
 	public void setText(String text) {
 		this.text = text;
 	}

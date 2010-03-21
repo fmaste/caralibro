@@ -1,7 +1,8 @@
 package caralibro.integrator.feed;
 
 import java.util.List;
-import caralibro.model.data.Comment;
+
+import caralibro.model.data.stream.Comment;
 
 /* 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
@@ -25,7 +26,7 @@ public class CommentFeed implements Feed {
 	}
 
 	@Override
-	public String getUserId() {
+	public String getAuthorId() {
 		if (comment.getUser() != null) {
 			if (comment.getUser().getId() != null) {
 				return comment.getUser().getId().toString();
@@ -66,6 +67,7 @@ public class CommentFeed implements Feed {
 	
 	@Override
 	public Long getUpdateTime() {
+		// There is no update time, use the creation time!
 		return comment.getCreationTime();
 	}
 

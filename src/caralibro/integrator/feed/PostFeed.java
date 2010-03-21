@@ -1,7 +1,7 @@
 package caralibro.integrator.feed;
 
-import java.util.List;
-import caralibro.model.data.Post;
+import java.util.Collection;
+import caralibro.model.data.stream.Post;
 
 /* 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
@@ -24,7 +24,7 @@ public class PostFeed implements Feed {
 	}
 	
 	@Override
-	public String getUserId() {
+	public String getAuthorId() {
 		if (post.getUser() != null) {
 			if (post.getUser().getId() != null) {
 				return post.getUser().getId().toString();
@@ -39,18 +39,30 @@ public class PostFeed implements Feed {
 	}
 
 	@Override
-	public List<String> getPhotoUrls() {
-		return post.getPhotoUrls();
+	public Collection<String> getPhotoUrls() {
+		if (post.getLink() != null) {
+			return post.getLink().getPhoto();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
-	public List<String> getVideoUrls() {
-		return post.getVideoUrls();
+	public Collection<String> getVideoUrls() {
+		if (post.getLink() != null) {
+			return post.getLink().getVideo();
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
-	public List<String> getLinkUrls() {
-		return post.getLinkUrls();
+	public Collection<String> getLinkUrls() {
+		if (post.getLink() != null) {
+			return post.getLink().getWeb();
+		} else {
+			return null;
+		}
 	}
 
 	@Override

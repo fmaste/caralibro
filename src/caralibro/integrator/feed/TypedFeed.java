@@ -1,6 +1,6 @@
 package caralibro.integrator.feed;
 
-import java.util.List;
+import java.util.Collection;
 
 /* 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
@@ -29,8 +29,8 @@ public class TypedFeed implements Feed {
 	}
 	
 	@Override
-	public String getUserId() {
-		return feed.getUserId();
+	public String getAuthorId() {
+		return feed.getAuthorId();
 	}
 	
 	@Override
@@ -39,17 +39,17 @@ public class TypedFeed implements Feed {
 	}
 
 	@Override
-	public List<String> getPhotoUrls() {
+	public Collection<String> getPhotoUrls() {
 		return feed.getPhotoUrls();
 	}
 
 	@Override
-	public List<String> getVideoUrls() {
+	public Collection<String> getVideoUrls() {
 		return feed.getVideoUrls();
 	}
 	
 	@Override
-	public List<String> getLinkUrls() {
+	public Collection<String> getLinkUrls() {
 		return feed.getLinkUrls();
 	}
 	

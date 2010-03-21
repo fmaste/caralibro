@@ -7,9 +7,9 @@ import org.json.JSONArray;
 import caralibro.factory.CommentFactory;
 import caralibro.factory.RequestFactory;
 import caralibro.model.data.Application;
-import caralibro.model.data.Comment;
-import caralibro.model.data.Post;
 import caralibro.model.data.Session;
+import caralibro.model.data.stream.Comment;
+import caralibro.model.data.stream.Post;
 
 /* 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)

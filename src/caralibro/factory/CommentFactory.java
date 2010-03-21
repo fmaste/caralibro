@@ -1,8 +1,8 @@
 package caralibro.factory;
 
 import org.json.JSONObject;
-import caralibro.model.data.Comment;
 import caralibro.model.data.User;
+import caralibro.model.data.stream.Comment;
 
 /* 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
@@ -19,11 +19,17 @@ public class CommentFactory {
 		return comment;
 	}
 	
+	/*
+	 * Parses a json string containing the comment and creates the comment object.
+	 * If there is no id, message, text, fromid or time an exception is thrown.
+	 * 
+	 * @param postJsonResponse 	One of the comments retrieved on the comments json array.
+	 * @return 					A comment object or null if the string is not a json object.
+	 */
 	public static Comment create(String commentJsonResponse) throws Exception {
 		if (commentJsonResponse == null || commentJsonResponse.isEmpty() || !commentJsonResponse.startsWith("{")) {
 			return null;
 		}
-		// TODO: Check for this keys or keep it like an exception ?
 		JSONObject commentJsonObject = new JSONObject(commentJsonResponse);
 		String id = commentJsonObject.getString("id");
 		String text = commentJsonObject.getString("text");
