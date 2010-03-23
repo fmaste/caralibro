@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import caralibro.model.constants.Facebook;
 
 /* 
@@ -14,12 +16,14 @@ import caralibro.model.constants.Facebook;
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
 public class ResponseDao {
-
+	private static final Logger logger = LoggerFactory.getLogger(ResponseDao.class);
+	
 	public static String get(Map<String,String> param) throws Exception {
 		return get(getParamAsString(param));
 	}
 
 	public static String get(String param) throws Exception {
+		logger.debug("Request: " + param);
 		String url = Facebook.REST_SERVER;
 		String responseBody = "";
 		HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(url).openConnection();
@@ -32,7 +36,7 @@ public class ResponseDao {
 	    outputStream.write(param.getBytes("UTF-8"));
 	    InputStream inputStream = httpUrlConnection.getInputStream();
 	    if (httpUrlConnection.getResponseCode() != 200) {
-	    	System.out.println("Request " + url + "?" + param + " responde code is not 200.");
+	    	logger.error("Response code " + httpUrlConnection.getResponseCode() + " must be 200.");
 	    	throw new Exception("Response code must be 200.");
 	    }
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
@@ -43,7 +47,7 @@ public class ResponseDao {
 	    outputStream.close();
 	    inputStream.close();
 	    httpUrlConnection.disconnect();
-		//System.out.println("Response: " + responseBody);
+	    logger.debug("Response: " + responseBody);
 	    return responseBody;
 	}
 	

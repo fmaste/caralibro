@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import caralibro.factory.GroupFactory;
 import caralibro.factory.RequestFactory;
 import caralibro.model.data.Application;
@@ -15,6 +17,7 @@ import caralibro.model.data.Session;
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
 public class GroupDao {
+	private static final Logger logger = LoggerFactory.getLogger(GroupDao.class);
 	
 	/*
 	 * @return If there are no groups returns null or empty

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import caralibro.factory.PageFactory;
 import caralibro.factory.RequestFactory;
 import caralibro.model.data.Application;
@@ -15,7 +17,8 @@ import caralibro.model.data.Session;
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
 public class PageDao {
-
+	private static final Logger logger = LoggerFactory.getLogger(PageDao.class);
+	
 	public static Collection<Page> getFromUser(Application application, Session session) throws Exception {
 		Map<String,Page> pagesMap = getFromUserByName(application, session);
 		return pagesMap.values();

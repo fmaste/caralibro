@@ -91,7 +91,7 @@ public class FBContentManager implements ContentManager {
 		// whose author is the Fan page (Ex: Mauricio Macri)
 		// to do this we ask for comments creation time instead of the post update_time. 
 		// These functionality isn't available through the REST api so it must be done through FQL
-		Collection<Comment> comments = CommentDao.get(application, session, sourceId, startTime);
+		Collection<Comment> comments = CommentDao.get(application, session, sourceId, startTime, null);
 		if (comments != null) {
 			for (Comment comment : comments) {
 				// This should have been checked in the query, do it anyway

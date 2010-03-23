@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import caralibro.factory.PostFactory;
 import caralibro.factory.RequestFactory;
 import caralibro.model.data.Application;
@@ -21,6 +23,7 @@ import caralibro.model.data.stream.Post;
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
 public class PostDao {
+	private static final Logger logger = LoggerFactory.getLogger(PostDao.class);
 	// By trial an error this was my calculated max number of posts that can be retrieved. More and you get an HTTP 500 error or an empty array.
 	private static final String MAX_LIMIT = "300";
 	private static final String DELTA = "50";
@@ -63,10 +66,9 @@ public class PostDao {
 				}
 			}
 		}
-		// TODO: Consider repeated values
-		System.out.println("Posts request has " + posts.size() + " posts");
+		logger.debug("Posts request has " + posts.size() + " posts");
 		if (!posts.isEmpty() && posts.size() > (Integer.parseInt(MAX_LIMIT) - Integer.parseInt(DELTA))) {
-			System.out.println("LIMIT REACHED: MAKING ANOTHER REQUEST!!!!!!!!!!!!!");
+			logger.debug("Limit reached, making another request.");
 			// Wait at least 6 seconds between requests. Facebook allows up to 100 requests per 600 seconds.
 			Long actualTime = System.currentTimeMillis();
 			Long deltaTime = actualTime - callTime;
@@ -92,15 +94,22 @@ public class PostDao {
 	public static Collection<Post> getFromUser(Application application, Session session, User user, Long startTime, Long endTime) throws Exception {
 		return getFromSourceId(application, session, user.getId().toString(), startTime, endTime);
 	}
+
+	public static Collection<Post> getFromApplication(Application application, Session session, Application sourceApplication, Long startTime, Long endTime) throws Exception {
+		return getFromSourceId(application, session, sourceApplication.getId().toString(), startTime, endTime);
+	}
 	
 	public static boolean remove(Application application, Session session, Post post) throws Exception {
+		logger.debug("Removing post " + post.getId());
 		Map<String,String> params = RequestFactory.create(application, session, "Stream.remove");
 		params.put("post_id", post.getId());
 		RequestFactory.sign(params, application, session);
 		String response = ResponseDao.get(params);
 		if (response != null && !response.isEmpty() && response.equals("true")) {
+			logger.debug("Post " + post.getId() + " was removed succesfully");
 			return true;
 		} else {
+			logger.error("Post " + post.getId() + " was not removed, response was: " + response);
 			return false;
 		}
 	}

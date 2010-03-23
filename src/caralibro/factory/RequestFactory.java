@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import caralibro.model.data.Application;
 import caralibro.model.data.Session;
 
@@ -13,6 +15,7 @@ import caralibro.model.data.Session;
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
 public class RequestFactory {
+	private static final Logger logger = LoggerFactory.getLogger(RequestFactory.class);
 	
 	public static Map<String,String> create(Application application, String method) {
 		Map<String,String> params = new HashMap<String,String>();
@@ -67,7 +70,7 @@ public class RequestFactory {
 		    }
 		} catch (Exception e) {
 			// Exception when there's no MD5 implementation!
-			System.err.println("No MD5 algorithm on the default packages.");
+			logger.error("No MD5 algorithm on the default packages.");
 			e.printStackTrace();
 		}
 		return ans.toString();
