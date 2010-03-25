@@ -31,14 +31,14 @@ public class ResponseDao {
 		httpUrlConnection.setDoInput(true);
 	    httpUrlConnection.setDoOutput(true);
 	    httpUrlConnection.connect();
-	    //System.out.println("Request: " + url + "?" + param);
 	    OutputStream outputStream = httpUrlConnection.getOutputStream();
 	    outputStream.write(param.getBytes("UTF-8"));
-	    InputStream inputStream = httpUrlConnection.getInputStream();
 	    if (httpUrlConnection.getResponseCode() != 200) {
 	    	logger.error("Response code " + httpUrlConnection.getResponseCode() + " must be 200.");
+	    	logger.error("Response message: \"" + httpUrlConnection.getResponseMessage() + "\"");
 	    	throw new Exception("Response code must be 200.");
 	    }
+	    InputStream inputStream = httpUrlConnection.getInputStream();
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
 	    String line = null;
 	    while ((line = reader.readLine()) != null) {
