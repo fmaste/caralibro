@@ -24,14 +24,15 @@ public class CommentDao {
 	private static final Logger logger = LoggerFactory.getLogger(CommentDao.class);
 	
 	/*
-	 * Retrieve Comments from source.
+	 * Retrieve Comments from source's last 1000 posts. Much more Posts and Facebook may not be able to handle the request.
+	 * Use this method to make updates frequently. To make a complete initial dump, use PostDao.getPosts() in combination with getFromPost().
 	 * 
 	 * @param startTime		Unix time in seconds (not milliseconds).
 	 * @param endTime		Unix time in seconds (not milliseconds).
 	 * @return 				If there are no Comments returns null or empty.
 	 */
 	public static Collection<Comment> get(Application application, Session session, String sourceId, Long startTime, Long endTime) throws Exception {
-		String debugMsg = "Retrieving Comments from ";
+		String debugMsg = "Retrieving Comments from " + sourceId + " starting from ";
 		String startTimeAsString = "0";
 		if (startTime != null) {
 			startTimeAsString = startTime.toString();
@@ -50,19 +51,20 @@ public class CommentDao {
 		debugMsg = debugMsg + ".";
 		logger.debug(debugMsg);
 		Map<String,String> params = Request.create(application, session, "Fql.multiquery");
-		String posts = "\"posts\":\"SELECT post_id FROM stream WHERE source_id = " + sourceId + " LIMIT 100\"";
-		String comments = "\"comments\":\"SELECT id, fromid, text, time FROM comment WHERE post_id IN (SELECT post_id FROM #posts) AND time > " + startTimeAsString;
+		String postsFql = "\"posts\":\"SELECT post_id FROM stream WHERE source_id = " + sourceId + " LIMIT 1000\"";
+		String postCommentsFql = "\"comments\":\"SELECT id, fromid, text, time FROM comment WHERE post_id IN (SELECT post_id FROM #posts) AND time > " + startTimeAsString;
 		if (endTimeAsString != null) {
-			comments = comments + " AND time < " + endTimeAsString;
+			postCommentsFql = postCommentsFql + " AND time < " + endTimeAsString;
 		}
-		comments = comments + "\"";
-		String multiQuery = "{" + posts + "," + comments + "}";
+		postCommentsFql = postCommentsFql + "\"";
+		String multiQuery = "{" + postsFql + "," + postCommentsFql + "}";
 		params.put("queries", multiQuery);
 		Request.sign(params, application, session);
 		String queriesJsonResponse = Response.get(params);
 		if (queriesJsonResponse == null || queriesJsonResponse.isEmpty() || !queriesJsonResponse.startsWith("[")) {
 			return null;
 		}
+		Collection<Comment> comments = null;
 		JSONArray queriesJsonArray = new JSONArray(queriesJsonResponse);
 		for (int i = 0; i < queriesJsonArray.length(); i++) {
 			JSONObject queryJsonObject = queriesJsonArray.optJSONObject(i);
@@ -71,15 +73,14 @@ public class CommentDao {
 				if (name.equals("comments")) {
 					JSONArray commentsJsonArray = queryJsonObject.optJSONArray("fql_result_set");
 					if (commentsJsonArray != null) {
-						return parseReponse(commentsJsonArray.toString());
+						comments = parseReponse(commentsJsonArray.toString());
 					} else {
 						return null;
 					}
 				}
 			}
 		}
-		// TODO: Recall!!!!
-		return null;
+		return comments;
 	}
 	
 	/*
@@ -93,7 +94,14 @@ public class CommentDao {
 		Map<String,String> params = Request.create(application, session, "Stream.getComments");
 		params.put("post_id", post.getId());
 		Request.sign(params, application, session);
-		return parseReponse(Response.get(params));
+		Collection<Comment> comments = parseReponse(Response.get(params));
+		// Add the post permalink to the comment!
+		if (comments != null) {
+			for (Comment comment : comments) {
+				comment.setPermaLink(post.getPermaLink());
+			}
+		}
+		return comments;
 	}
 
 	private static Collection<Comment> parseReponse(String commentsJsonResponse) throws Exception {

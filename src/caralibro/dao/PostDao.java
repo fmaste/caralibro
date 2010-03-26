@@ -2,6 +2,7 @@ package caralibro.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,6 +20,7 @@ import caralibro.rest.Response;
 
 /*
  * Before you can get data from a user's stream, you need the extended permission "read_stream".
+ * Do not trust the Post update_time because Facebook has bugs with it.
  * 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
@@ -32,21 +34,31 @@ public class PostDao {
 	/*
 	 * Retrieve Posts from source.
 	 * 
-	 * @param startTime		Unix time in seconds (not milliseconds).
-	 * @param endTime		Unix time in seconds (not milliseconds).
+	 * @param startTime		Unix time in seconds (not milliseconds). Default is 1 day.
+	 * @param endTime		Unix time in seconds (not milliseconds). Default is now.
 	 * @return 				If there are no Posts returns null or empty.
 	 */	
 	public static Collection<Post> getFromSourceId(Application application, Session session, String sourceId, Long startTime, Long endTime) throws Exception {
+		String debugMsg = "Retrieving Posts from " + sourceId + " starting from ";
 		Long callTime = System.currentTimeMillis();
 		Map<String,String> params = Request.create(application, session, "Stream.get");
 		params.put("source_ids", sourceId);
 		params.put("limit", MAX_LIMIT); // Facebook default limit is 30
 		if (startTime != null) {
 			params.put("start_time", startTime.toString()); // Defaults to 1 day
+			debugMsg = debugMsg + (new Date(startTime*1000)).toString() + " (" + startTime + ")";
+		} else {
+			debugMsg = debugMsg + "the begining";
 		}
+		debugMsg = debugMsg + " up to ";
 		if (endTime != null) {
 			params.put("end_time", endTime.toString()); // Defaults to now
+			debugMsg = debugMsg + (new Date(endTime*1000)).toString() + " (" + endTime + ")";
+		} else {
+			debugMsg = debugMsg + "now";
 		}
+		debugMsg = debugMsg + ".";
+		logger.debug(debugMsg);
 		Request.sign(params, application, session);
 		String streamJsonResponse = Response.get(params);
 		// JSON response must be a JSON object with 'posts', 'profiles' and 'albums' as keys!
@@ -79,9 +91,9 @@ public class PostDao {
 				}
 			}
 		}
-		logger.debug("Posts request has " + posts.size() + " posts");
+		logger.debug("Posts response has " + posts.size() + " posts.");
 		if (!posts.isEmpty() && posts.size() > (Integer.parseInt(MAX_LIMIT) - Integer.parseInt(DELTA))) {
-			logger.debug("Limit reached, making another request.");
+			logger.debug("Limit reached, there could be more posts left, making another request.");
 			// Wait at least 6 seconds between requests. Facebook allows up to 100 requests per 600 seconds.
 			Long actualTime = System.currentTimeMillis();
 			Long deltaTime = actualTime - callTime;

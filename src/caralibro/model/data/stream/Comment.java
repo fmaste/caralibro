@@ -15,6 +15,7 @@ public class Comment implements Stream {
 	private String text = null;
 	// Comments can't be updated and only have a creation time.
 	private Long creationTime = null; // Unix time in seconds, not milliseconds
+	private String permaLink = null;
 
 	public Comment() {
 	}
@@ -58,6 +59,14 @@ public class Comment implements Stream {
 	 */
 	public void setCreationTime(Long creationTime) {
 		this.creationTime = creationTime;
+	}
+	
+	public String getPermaLink() {
+		return permaLink;
+	}
+
+	public void setPermaLink(String permaLink) {
+		this.permaLink = permaLink;
 	}
 	
 }

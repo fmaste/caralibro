@@ -60,11 +60,11 @@ public class Main2 {
 						System.out.println("Likes: " + postLikes);
 						System.out.println("Comments: " + postComments);
 						String from = "";
-						if (post.getUser() != null && post.getUser().getId() != null ) {
-							if (post.getUser().getId().equals(PAGE_ID) ) {
+						if (post.getAuthorId() != null) {
+							if (post.getAuthorId().equals(PAGE_ID) ) {
 								from = PAGE_NAME;
 							} else {
-								from = String.valueOf(post.getUser().getId());
+								from = String.valueOf(post.getAuthorId());
 							}
 						}
 						System.out.println("From: " + from);
@@ -80,11 +80,11 @@ public class Main2 {
 								System.out.println("-------------------- COMMENT " + comment.getId() + " --------------------");
 								System.out.println("Date: " + new Date(comment.getCreationTime()*1000));
 								from = "";
-								if (comment.getUser() != null && comment.getUser().getId() != null ) {
-									if (comment.getUser().getId().equals(PAGE_ID)) {
+								if (comment.getAuthorId() != null) {
+									if (comment.getAuthorId().equals(PAGE_ID)) {
 										from = PAGE_NAME;
 									} else {
-										from = String.valueOf(comment.getUser().getId());
+										from = String.valueOf(comment.getAuthorId());
 									}
 								}
 								System.out.println("From: " + from);

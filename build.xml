@@ -1,0 +1,49 @@
+<project name="Caralibro" default="all" basedir=".">
+
+	<property name="src.dir"      		value="src"/> 	<!-- java source folder -->
+	<property name="bin.dir"      		value="bin"/> 	<!-- intermediate build products -->
+	<property name="jars.dir"			value="jar"/> 	<!-- jar files -->
+	<property name="lib.dir"      		value="lib"/> 	<!-- local libraries linked against -->
+	<property name="dist.dir" 			value="dist"/> 	<!-- build product location -->
+	<property name="test.dir"	      	value="test"/>
+	<property name="resources" 			value="resources"/> <!-- location of general java resources -->
+
+	<path id="compileClasspath">
+		<!-- fileset dir="${lib.dir}"/ -->
+		<fileset file="${lib.dir}/slf4j-api-1.5.11.jar"/>
+	</path>
+
+	<target name="all" depends="jar" description="Borra los archivos y los vuelve a compilar."/>
+
+	<target name="clean" description="Borra los archivos binarios">
+		<delete>
+			<fileset dir="${bin.dir}" includes="**/*.class"/>
+		</delete>
+	</target>
+
+	<target name="compile" description="Compile code">
+		<mkdir dir="${bin.dir}"/>
+		<javac 
+			deprecation="on" 
+			srcdir="${src.dir}" 
+			destdir="${bin.dir}"
+			source="1.6" 
+			target="1.6"
+			includeAntRuntime="no"
+			classpathref="compileClasspath" 
+			debug="${compile.debug}">
+			<compilerarg value="-Xlint"/>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile" description="Build jar">
+		<mkdir dir="${dist.dir}" />
+		<jar jarfile="${dist.dir}/Caralibro.jar" compress="false" basedir="${bin.dir}">
+			<manifest>
+                <!-- attribute name="Main-class" value="main.Main"/ -->
+                <attribute name="Class-Path" value="${lib.dir}/slf4j-api-1.5.11.jar"/>
+            </manifest>
+		</jar>
+	</target>
+
+</project>
