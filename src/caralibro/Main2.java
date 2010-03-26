@@ -31,7 +31,7 @@ public class Main2 {
 	
 	public static void main(String[] args) throws Exception {
 		Application application = ApplicationFactory.create(APPLICATION_ID, API_KEY, APPLICATION_SECRET, true);
-		Session session = SessionFactory.create(SESSION_KEY, SESSION_SECRET, UserFactory.create(USER_ID), 0L);		
+		Session session = SessionFactory.create(SESSION_KEY, SESSION_SECRET, USER_ID, 0L);		
 		Map<String,Page> fanPages = PageDao.getFromUserByName(application, session);
 		Page fanPage = fanPages.get(PAGE_NAME);
 		if (fanPage != null) {
