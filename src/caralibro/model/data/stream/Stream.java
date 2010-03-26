@@ -11,9 +11,9 @@ public interface Stream {
 	
 	public void setId(String id);
 	
-	// public Long getAuthorId();
+	public Long getAuthorId();
 	
-	// public void setAuthorId(Long id);
+	public void setAuthorId(Long id);
 	
 	public String getText();
 	

@@ -1,4 +1,4 @@
-package caralibro.factory;
+package caralibro.rest;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ import caralibro.model.data.Session;
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
-public class RequestFactory {
-	private static final Logger logger = LoggerFactory.getLogger(RequestFactory.class);
+public class Request {
+	private static final Logger logger = LoggerFactory.getLogger(Request.class);
 	
 	public static Map<String,String> create(Application application, String method) {
 		Map<String,String> params = new HashMap<String,String>();

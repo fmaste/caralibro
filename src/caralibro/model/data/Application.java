@@ -1,6 +1,5 @@
 package caralibro.model.data;
 
-
 /*
  * Models a Facebook Application.
  * To create one you need to have a Facebook account. 

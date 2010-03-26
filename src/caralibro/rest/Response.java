@@ -1,4 +1,4 @@
-package caralibro.dao;
+package caralibro.rest;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -15,15 +15,15 @@ import caralibro.model.constants.Facebook;
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
-public class ResponseDao {
-	private static final Logger logger = LoggerFactory.getLogger(ResponseDao.class);
+public class Response {
+	private static final Logger logger = LoggerFactory.getLogger(Response.class);
 	
 	public static String get(Map<String,String> param) throws Exception {
 		return get(getParamAsString(param));
 	}
 
 	public static String get(String param) throws Exception {
-		logger.debug("Request: " + param);
+		logger.debug("Request: \"" + param + "\".");
 		String url = Facebook.REST_SERVER;
 		String responseBody = "";
 		HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(url).openConnection();
@@ -47,7 +47,7 @@ public class ResponseDao {
 	    outputStream.close();
 	    inputStream.close();
 	    httpUrlConnection.disconnect();
-	    logger.debug("Response: " + responseBody);
+	    logger.debug("Response: \"" + responseBody + "\".");
 	    return responseBody;
 	}
 	

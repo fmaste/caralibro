@@ -1,6 +1,5 @@
 package caralibro.model.data;
 
-
 /* 
  * A Facebook user can be a stream source or a stream author.
  * 

@@ -3,7 +3,8 @@ package caralibro.factory;
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import caralibro.model.data.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import caralibro.model.data.stream.Link;
 import caralibro.model.data.stream.Post;
 
@@ -12,11 +13,12 @@ import caralibro.model.data.stream.Post;
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
 public class PostFactory {
-
-	public static Post create(String id, User user, String text, Link link, Integer comments, Integer likes, Long creationTime, Long updateTime, String permaLink) {
+	private static final Logger logger = LoggerFactory.getLogger(CommentFactory.class);
+	
+	public static Post create(String id, Long authorId, String text, Link link, Integer comments, Integer likes, Long creationTime, Long updateTime, String permaLink) {
 		Post post = new Post();
 		post.setId(id);
-		post.setUser(user);
+		post.setAuthorId(authorId);
 		post.setText(text);
 		post.setLink(link);
 		post.setComments(comments);
@@ -28,61 +30,60 @@ public class PostFactory {
 	}
 	
 	/*
-	 * Parses a json string containing the post and creates the post object.
-	 * If there is no post_id, message, actor_id, created_time, updated_time or permalink an exception is thrown.
+	 * Parses a JSON string containing the post and creates the post object.
+	 * If there is no post_id, message, actor_id, created_time, updated_time or permalink key an exception is thrown.
 	 * Link default value is null, for comments and likes is zero.
 	 * 
-	 * @param postJsonResponse 	One of the posts retrieved on the posts json array.
-	 * @return 					A post object or null if the string is not a json object.
+	 * @param postJsonResponse 	One of the posts retrieved on the posts JSON array.
+	 * @return 					A post object or null if the string is not a JSON object.
 	 */
 	public static Post create(String postJsonResponse) throws Exception {
+		logger.debug("Parsing JSON encoded Post: \"" + postJsonResponse + "\"");
 		if (postJsonResponse == null || postJsonResponse.isEmpty() || !postJsonResponse.startsWith("{")) {
+			logger.error("Not a valid JSON encoded Post: \"" + postJsonResponse + "\"");
 			return null;
 		}
 		JSONObject postJsonObject = new JSONObject(postJsonResponse);
 		String id = postJsonObject.getString("post_id");
 		String text = postJsonObject.getString("message");
-		Long actorId = postJsonObject.getLong("actor_id");
-		User user = null;
-		if (actorId != null ) {
-			user = UserFactory.create(actorId);
-		}
+		Long authorId = postJsonObject.getLong("actor_id");
+		Long creationTime = postJsonObject.getLong("created_time");
+		Long updateTime = postJsonObject.getLong("updated_time");
+		String permaLink = postJsonObject.getString("permalink");
 		Link link = null;
 		String attachmentJsonObject = postJsonObject.optString("attachment");
 		if (attachmentJsonObject != null && !attachmentJsonObject.isEmpty()) {
 			link = createLink(attachmentJsonObject);
 		}
-		// TODO: Add number of comments and number of likes
+		// If there is no comment count, zero is assumed.
 		JSONObject commentsJsonObject = postJsonObject.optJSONObject("comments");
 		Integer comments = 0;
 		if (commentsJsonObject != null) {
 			comments = commentsJsonObject.optInt("count");	
 		}
+		// If there is no like count, zero is assumed.		
 		JSONObject likesJsonObject = postJsonObject.optJSONObject("likes");
 		Integer likes = 0;
 		if (likesJsonObject != null) {
 			likes = likesJsonObject.optInt("count");	
 		}
-		Long creationTime = postJsonObject.getLong("created_time");
-		Long updateTime = postJsonObject.getLong("updated_time");
-		String permaLink = postJsonObject.getString("permalink");
 		// TODO: Long viewerId = postJsonObject.getLong("viewer_id");
 		// TODO: Long sourceId = postJsonObject.getLong("source_id");
 		// FIXME: Gives error sometimes, but the string is there!
 		// Maybe the key is sometimes a string sometimes a long like with page id and post id
 		// Long targetId = postJsonObject.getLong("target_id");
-		return create(id, user, text, link, comments, likes, creationTime, updateTime, permaLink);
+		return create(id, authorId, text, link, comments, likes, creationTime, updateTime, permaLink);
 	}
 
 	/*
-	 * Parses a json string containing the post's attachment object.
-	 * If there is no media key with a json array, null is returned.
+	 * Parses a JSON string containing the post's attachment object.
+	 * If there is no media key with a JSON array, null is returned.
 	 * If there is no type key or unknown type on the media object, the link is ignored.
 	 * Web links are a link to Facebook that redirects to the original web link.
 	 * Photos and videos are direct links to the files.
 	 * 
-	 * @param postJsonResponse 	The attachment json object on one of the posts retrieved on the posts json array.
-	 * @return 					A link object or null if the string is not a json object or if there are no valid links.
+	 * @param postJsonResponse 	The attachment JSON object on one of the posts retrieved on the posts JSON array.
+	 * @return 					A link object or null if the string is not a JSON object or if there are no valid links.
 	 */
 	private static Link createLink(String attachmentJsonResponse) throws Exception {
 		if (attachmentJsonResponse == null || attachmentJsonResponse.isEmpty() || !attachmentJsonResponse.startsWith("{")) {

@@ -11,7 +11,7 @@ public class ApplicationFactory {
 	public static Application create(Long id, String key, String secret, Boolean desktop) {
 		Application application = new Application();
 		application.setId(id);
-		// TODO: Add name!!
+		// TODO: Add name ??
 		application.setKey(key);
 		application.setSecret(secret);
 		application.setDesktop(desktop);

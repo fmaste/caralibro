@@ -1,6 +1,8 @@
 package caralibro.factory;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import caralibro.model.data.Group;
 
 /* 
@@ -8,6 +10,7 @@ import caralibro.model.data.Group;
  * @author		Simon Aberg Cobo (sima.cobo@gmail.com)
  */ 
 public class GroupFactory {
+	private static final Logger logger = LoggerFactory.getLogger(GroupFactory.class);
 	
 	public static Group create(Long id, String name) {
 		Group group = new Group();
@@ -17,14 +20,16 @@ public class GroupFactory {
 	}
 	
 	/*
-	 * Parses a json string containing the group and creates the group object.
-	 * If there is no gid or name an exception is thrown.
+	 * Parses a JSON string containing the Group and creates the Group object.
+	 * If there is no gid or name key an exception is thrown.
 	 * 
-	 * @param postJsonResponse 	One of the groups retrieved on the groups json array.
-	 * @return 					A group object or null if the string is not a json object.
+	 * @param postJsonResponse 	One of the groups retrieved on the Groups JSON array.
+	 * @return 					A Group object or null if the string is not a JSON object.
 	 */
 	public static Group create(String groupJsonResponse) throws Exception {
+		logger.debug("Parsing JSON encoded Group: \"" + groupJsonResponse + "\"");
 		if (groupJsonResponse == null || groupJsonResponse.isEmpty() || !groupJsonResponse.startsWith("{")) {
+			logger.error("Not a valid JSON encoded Group: \"" + groupJsonResponse + "\"");
 			return null;
 		}
 		JSONObject groupJsonObject = new JSONObject(groupJsonResponse);
@@ -34,7 +39,7 @@ public class GroupFactory {
 	}
 	
 	/*
-	 * @return The group's Facebook page.
+	 * @return 		The group's Facebook page.
 	 */
 	public static String createUrl(Group group) {
 		if (group != null && group.getId() != null ) {

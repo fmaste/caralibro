@@ -8,13 +8,14 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import caralibro.factory.PostFactory;
-import caralibro.factory.RequestFactory;
 import caralibro.model.data.Application;
 import caralibro.model.data.Group;
 import caralibro.model.data.Page;
 import caralibro.model.data.Session;
 import caralibro.model.data.User;
 import caralibro.model.data.stream.Post;
+import caralibro.rest.Request;
+import caralibro.rest.Response;
 
 /*
  * Before you can get data from a user's stream, you need the extended permission "read_stream".
@@ -28,11 +29,16 @@ public class PostDao {
 	private static final String MAX_LIMIT = "300";
 	private static final String DELTA = "50";
 	
-	// Return a collection of posts or null if there are no posts.
-	// Use time only if it is not null.
+	/*
+	 * Retrieve Posts from source.
+	 * 
+	 * @param startTime		Unix time in seconds (not milliseconds).
+	 * @param endTime		Unix time in seconds (not milliseconds).
+	 * @return 				If there are no Posts returns null or empty.
+	 */	
 	public static Collection<Post> getFromSourceId(Application application, Session session, String sourceId, Long startTime, Long endTime) throws Exception {
 		Long callTime = System.currentTimeMillis();
-		Map<String,String> params = RequestFactory.create(application, session, "Stream.get");
+		Map<String,String> params = Request.create(application, session, "Stream.get");
 		params.put("source_ids", sourceId);
 		params.put("limit", MAX_LIMIT); // Facebook default limit is 30
 		if (startTime != null) {
@@ -41,8 +47,8 @@ public class PostDao {
 		if (endTime != null) {
 			params.put("end_time", endTime.toString()); // Defaults to now
 		}
-		RequestFactory.sign(params, application, session);
-		String streamJsonResponse = ResponseDao.get(params);
+		Request.sign(params, application, session);
+		String streamJsonResponse = Response.get(params);
 		// JSON response must be a JSON object with 'posts', 'profiles' and 'albums' as keys!
 		if (streamJsonResponse == null || streamJsonResponse.isEmpty() || !streamJsonResponse.startsWith("{")) {
 			return null;
@@ -57,10 +63,17 @@ public class PostDao {
 		}
 		ArrayList<Post> posts = new ArrayList<Post>();
 		for (int i = 0; i < postsJsonArray.length(); i++) {
-			// Get that index value as a string and PostFactory must know how to parse it!
+			// The Post is retrieved as a String and PostFactory must know how to handle it!
 			String postString = postsJsonArray.optString(i);
 			if (postString != null && !postString.isEmpty()) {
-				Post post = PostFactory.create(postString);
+				Post post = null;
+				try {
+					post = PostFactory.create(postString);
+				} catch (Exception e) {
+					post = null;
+					logger.error("Skipping invalid JSON encoded Post: \"" + postString + "\".");
+					e.printStackTrace();
+				}
 				if (post != null) {
 					posts.add(post);
 				}
@@ -100,16 +113,16 @@ public class PostDao {
 	}
 	
 	public static boolean remove(Application application, Session session, Post post) throws Exception {
-		logger.debug("Removing post " + post.getId());
-		Map<String,String> params = RequestFactory.create(application, session, "Stream.remove");
+		logger.debug("Removing Post: \"" + post.getId() + "\"");
+		Map<String,String> params = Request.create(application, session, "Stream.remove");
 		params.put("post_id", post.getId());
-		RequestFactory.sign(params, application, session);
-		String response = ResponseDao.get(params);
-		if (response != null && !response.isEmpty() && response.equals("true")) {
+		Request.sign(params, application, session);
+		String response = Response.get(params);
+		if (response != null && !response.isEmpty() && response.equalsIgnoreCase("true")) {
 			logger.debug("Post " + post.getId() + " was removed succesfully");
 			return true;
 		} else {
-			logger.error("Post " + post.getId() + " was not removed, response was: " + response);
+			logger.error("Post " + post.getId() + " was not removed, response was: \"" + response + "\"");
 			return false;
 		}
 	}

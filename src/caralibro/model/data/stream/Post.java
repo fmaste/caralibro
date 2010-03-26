@@ -1,7 +1,5 @@
 package caralibro.model.data.stream;
 
-import caralibro.model.data.User;
-
 /*
  * Almost everything in Facebook is a post. Is the main part of Facebook's stream.
  * Things left can be Discussions, Events, Messages and Notes.
@@ -16,7 +14,7 @@ import caralibro.model.data.User;
 public class Post implements Stream {
 	// It is composed of sourceId_postId
 	private String id = null;
-	private User user = null;
+	private Long authorId = null;
 	private String text = null;	
 	private Link link = null;
 	private Integer comments = null; // Comments count
@@ -38,12 +36,14 @@ public class Post implements Stream {
 		this.id = id;
 	}
 	
-	public User getUser() {
-		return user;
+	@Override
+	public Long getAuthorId() {
+		return authorId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	@Override
+	public void setAuthorId(Long authorId) {
+		this.authorId = authorId;
 	}
 
 	@Override

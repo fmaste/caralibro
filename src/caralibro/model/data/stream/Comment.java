@@ -1,7 +1,5 @@
 package caralibro.model.data.stream;
 
-import caralibro.model.data.User;
-
 /* 
  * Comments are attached to posts and can only contain text (No photos, videos, likes, etc).
  * Can't be edited, only deleted if you have the right permissions.
@@ -13,7 +11,7 @@ import caralibro.model.data.User;
 public class Comment implements Stream {
 	// It is composed of sourceId_postId_commentId
 	private String id = null;
-	private User user = null;
+	private Long authorId = null;
 	private String text = null;
 	// Comments can't be updated and only have a creation time.
 	private Long creationTime = null; // Unix time in seconds, not milliseconds
@@ -31,12 +29,14 @@ public class Comment implements Stream {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	@Override
+	public Long getAuthorId() {
+		return authorId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	@Override
+	public void setAuthorId(Long authorId) {
+		this.authorId = authorId;
 	}
 
 	@Override

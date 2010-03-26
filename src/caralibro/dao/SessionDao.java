@@ -1,10 +1,11 @@
 package caralibro.dao;
 
 import java.util.Map;
-import caralibro.factory.RequestFactory;
 import caralibro.factory.SessionFactory;
 import caralibro.model.data.Application;
 import caralibro.model.data.Session;
+import caralibro.rest.Request;
+import caralibro.rest.Response;
 
 /* 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)
@@ -13,11 +14,11 @@ import caralibro.model.data.Session;
 public class SessionDao {
 
 	public static Session getFromToken(Application application, String authToken) throws Exception {
-		Map<String,String> params = RequestFactory.create(application, "Auth.getSession");
+		Map<String,String> params = Request.create(application, "Auth.getSession");
 		params.put("auth_token", authToken);
 		params.put("generate_session_secret", "1");
-		RequestFactory.sign(params, application);
-		String sessionJsonResponse = ResponseDao.get(params);
+		Request.sign(params, application);
+		String sessionJsonResponse = Response.get(params);
 		return SessionFactory.create(sessionJsonResponse);		
 	}
 	

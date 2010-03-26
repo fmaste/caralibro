@@ -1,6 +1,5 @@
 package caralibro.model.data;
 
-
 /*
  * A Facebook group is a stream source but not an author. The group can't post, only member users that can be admins or not.
  * 
