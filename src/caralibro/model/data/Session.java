@@ -7,7 +7,7 @@ package caralibro.model.data;
 public class Session {
 	private String key = null;
 	private String secret = null;
-	private User user = null;
+	private Long userId = null;
 	private Long expirationTime = null; // Unix time in seconds, not milliseconds
 	
 	public Session() {
@@ -29,12 +29,12 @@ public class Session {
 		this.secret = secret;
 	}
 
-	public User getUser() {
-		return user;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	/*

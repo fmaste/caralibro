@@ -10,11 +10,11 @@ import caralibro.model.data.User;
  */ 
 public class SessionFactory {
 
-	public static Session create(String key, String secret, User user, Long expirationTime) {
+	public static Session create(String key, String secret, Long userId, Long expirationTime) {
 		Session session = new Session();
 		session.setKey(key);
 		session.setSecret(secret);
-		session.setUser(user);
+		session.setUserId(userId);
 		session.setExpirationTime(expirationTime);
 		return session;
 	}
@@ -28,7 +28,7 @@ public class SessionFactory {
 		if (secret.isEmpty()) {
 			secret = null;
 		}
-		return create(key, secret, UserFactory.create(userId), expirationTime);
+		return create(key, secret, userId, expirationTime);
 	}
 	
 }

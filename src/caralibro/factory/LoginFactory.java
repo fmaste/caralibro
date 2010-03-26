@@ -16,7 +16,7 @@ public class LoginFactory {
 	}
 	
 	// Extended permissions like this, a comma-separated list: read_stream,publish_stream,offline_access
-	public static String createUrlFromAuthenticationToken(Application application, String authenticationToken, String extendedPermissions) {
+	private static String createUrlFromAuthenticationToken(Application application, String authenticationToken, String extendedPermissions) {
 		return createUrlFromAuthenticationToken(application, authenticationToken) + "&req_perms=" + extendedPermissions + "&enable_profile_selector=1";
 	}
 	
