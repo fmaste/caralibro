@@ -2,7 +2,6 @@ package caralibro.factory;
 
 import org.json.JSONObject;
 import caralibro.model.data.Session;
-import caralibro.model.data.User;
 
 /* 
  * @author		Federico Pascual Mastellone (fmaste@gmail.com)

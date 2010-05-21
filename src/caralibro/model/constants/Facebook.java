@@ -6,4 +6,5 @@ package caralibro.model.constants;
  */ 
 public class Facebook {
 	public static final String REST_SERVER = "http://api.facebook.com/restserver.php";
+	public static final String GRAPH_SERVER = "http://graph.facebook.com";
 }

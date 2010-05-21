@@ -9,6 +9,7 @@ package caralibro.model.data;
 public class User implements Source, Author {
 	private Long id = null;
 	private String name = null;
+	private String gender = null;
 	
 	public User() {
 	}
@@ -32,5 +33,17 @@ public class User implements Source, Author {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	@Override
+	public String toString() {
+		return "User [gender=" + gender + ", id=" + id + ", name=" + name + "]";
+	}
 }

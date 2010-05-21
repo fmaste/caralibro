@@ -1,6 +1,7 @@
 package caralibro.rest;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -63,6 +64,32 @@ public class Response {
 			ans = ans + entry.getKey() + "=" + entry.getValue();
 		}
 		return ans;
+	}
+
+	public static String getFromGraphAPI(String params) throws Exception {
+		String url = Facebook.GRAPH_SERVER + "/" + params;
+		String responseBody = "";
+		HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(url).openConnection();
+		httpUrlConnection.setRequestMethod("GET");
+		httpUrlConnection.setDoInput(true);
+	    httpUrlConnection.connect();
+	    try {
+	    	InputStream inputStream = httpUrlConnection.getInputStream();
+	    
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+		    String line = null;
+		    while ((line = reader.readLine()) != null) {
+		    	responseBody += line;
+		    }
+		    inputStream.close();
+		    httpUrlConnection.disconnect();
+		    logger.debug("Response: \"" + responseBody + "\".");
+		    return responseBody;
+		    
+	    } catch(IOException e) {
+	    	e.printStackTrace();
+	    	return null;
+	    }
 	}
 	
 }
