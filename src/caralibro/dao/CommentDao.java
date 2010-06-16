@@ -104,6 +104,27 @@ public class CommentDao {
 		return comments;
 	}
 
+	/*
+	 * Retrieve comments from xid.
+	 * 
+	 * @param xid		The xid.
+	 * @return 			If there are no comments returns null or empty.
+	 */
+	public static Collection<Comment> getFromXid(Application application, Session session, String xid) throws Exception {
+		logger.debug("Retrieving Comment from xid: \"" + xid + "\".");
+		Map<String,String> params = Request.create(application, session, "Fql.query");
+		params.put("query", "SELECT id, fromid, text, time FROM comment WHERE xid = '" + xid + "'");
+		Request.sign(params, application, session);
+		Collection<Comment> comments = parseReponse(Response.get(params));
+		// Add the post permalink to the comment!
+		if (comments != null) {
+			for (Comment comment : comments) {
+				comment.setPermaLink(""); // TODO: No link? What about the page where the fb:comment tag is?
+			}
+		}
+		return comments;
+	}
+
 	private static Collection<Comment> parseReponse(String commentsJsonResponse) throws Exception {
 		logger.debug("Parsing JSON encoded Comments: \"" + commentsJsonResponse + "\".");
 		// Warning: If there are no comments the response is like this
@@ -132,10 +153,26 @@ public class CommentDao {
 		}
 		return comments;
 	}
-	
+
 	public static boolean remove(Application application, Session session, Comment comment) throws Exception {
 		logger.debug("Removing Comment " + comment.getId());
 		Map<String,String> params = Request.create(application, session, "Stream.removeComment");
+		params.put("comment_id", comment.getId());
+		Request.sign(params, application, session);
+		String response = Response.get(params);
+		if (response != null && !response.isEmpty() && response.equalsIgnoreCase("true")) {			
+			logger.debug("Comment " + comment.getId() + " was removed succesfully.");
+			return true;
+		} else {
+			logger.error("Comment " + comment.getId() + " was not removed, response was: \"" + response + "\".");
+			return false;
+		}
+	}
+
+	public static boolean removeFromXid(Application application, Session session, String xid, Comment comment) throws Exception {
+		logger.debug("Removing Comment " + comment.getId());
+		Map<String,String> params = Request.create(application, session, "Comments.remove");
+		params.put("xid", xid);
 		params.put("comment_id", comment.getId());
 		Request.sign(params, application, session);
 		String response = Response.get(params);
