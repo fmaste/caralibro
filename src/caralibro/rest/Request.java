@@ -32,7 +32,12 @@ public class Request {
 		params.put("session_key", session.getKey());
 		return params;
 	}
-	
+
+	public static void sign(Map<String,String> params, Session session) {
+		params.put("ss", "true");
+		params.put("sig", generateSignature(session.getSecret(), params));
+	}
+
 	public static void sign(Map<String,String> params, Application application) {
 		params.put("sig", generateSignature(application.getSecret(),params));
 	}
