@@ -1,0 +1,4 @@
+A Java SDK for Facebook's old REST API.
+
+The basic idea behind this project was to circumvent the problems that a customer was having integrating his content moderation platform with very popular Pages or Groups. The problems were due to the massive amount of posts and comments that were generated in some political parties Fan Page's were Facebook was responding with no data at all.
+An abstraction of Facebook's data model was created and made easily retrievable as long as the user's Application ID and secret had the right permissions.
